@@ -1,0 +1,152 @@
+﻿body{
+
+margin:0;
+font-family:sans-serif;
+color:white;
+text-align:center;
+background:black;
+
+}
+
+/* stars background */
+
+.stars{
+
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+animation:move 60s linear infinite;
+z-index:-1;
+
+}
+
+@keyframes move{
+
+0%{background-position:0 0}
+100%{background-position:1000px 1000px}
+
+}
+
+/* barber pole */
+
+.pole{
+
+position:fixed;
+top:20px;
+right:20px;
+width:40px;
+height:150px;
+
+background:repeating-linear-gradient(
+45deg,
+red 0px,
+red 10px,
+white 10px,
+white 20px,
+blue 20px,
+blue 30px
+);
+
+border-radius:20px;
+
+animation:spin 3s linear infinite;
+
+}
+
+@keyframes spin{
+
+0%{background-position:0 0}
+100%{background-position:0 200px}
+
+}
+
+.container{
+
+max-width:600px;
+margin:auto;
+padding:20px;
+background:rgba(0,0,0,0.7);
+border-radius:20px;
+margin-top:40px;
+
+}
+
+.logo{
+
+width:200px;
+
+}
+
+.time{
+
+background:#222;
+padding:10px;
+border-radius:10px;
+margin:15px;
+
+}
+
+.cards{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+
+}
+
+.card{
+
+background:#1b1b1b;
+padding:15px;
+border-radius:12px;
+
+}
+
+.card span{
+
+display:block;
+color:#00ffd5;
+
+}
+
+.booking input,
+.booking select{
+
+width:90%;
+padding:10px;
+margin:8px;
+border-radius:8px;
+border:none;
+
+}
+
+.booking button{
+
+padding:12px 25px;
+background:#00d9ff;
+border:none;
+border-radius:10px;
+color:black;
+
+}
+
+.contact a{
+
+font-size:30px;
+margin:15px;
+color:white;
+
+}
+
+.fa-whatsapp{color:#25D366;}
+.fa-phone{color:#00b7ff;}
+.fa-location-dot{color:red;}
+
+.creator{
+
+margin-top:20px;
+font-size:12px;
+color:#aaa;
+
+}

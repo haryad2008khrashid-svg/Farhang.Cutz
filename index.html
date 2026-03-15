@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="ku">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farhang Cutz</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<div class="pole"></div>
+
+<div class="container">
+
+<img src="logo.png" class="logo">
+
+<h1>Farhang Cutz</h1>
+
+<div class="time">
+<i class="fa-solid fa-clock"></i>
+2PM - 11PM
+</div>
+
+<h2>Price List</h2>
+
+<div class="cards">
+
+<div class="card">سەرچاکردن<span>5000</span></div>
+<div class="card">سەرچاکردن + ڕیش<span>6000</span></div>
+<div class="card">سەرچاکردن + ڕیش + داھینان<span>7000</span></div>
+<div class="card">پرێمیۆم<span>8000</span></div>
+<div class="card">VIP<span>15000</span></div>
+<div class="card">ڕازاندنەوەی زاو<span>30000</span></div>
+<div class="card">هایدرۆفیشال<span>15000</span></div>
+<div class="card">ڕیش چاکردن<span>3000</span></div>
+<div class="card">قژ داھینان<span>3000</span></div>
+<div class="card">خاولی و سەرشۆردن<span>1000</span></div>
+
+</div>
+
+<h2>Booking</h2>
+
+<div class="booking">
+
+<input id="name" placeholder="ناو">
+
+<input id="phone" placeholder="ژمارە تەلەفون">
+
+<select id="service">
+
+<option>سەرچاکردن</option>
+<option>سەرچاکردن + ڕیش</option>
+<option>VIP</option>
+<option>ڕیش چاکردن</option>
+
+</select>
+
+<input type="date" id="date">
+
+<input type="time" id="time">
+
+<button onclick="sendBooking()">ناردنی داواکاری</button>
+
+</div>
+
+<div class="contact">
+
+<a href="tel:07700526746">
+<i class="fa-solid fa-phone"></i>
+</a>
+
+<a href="https://wa.me/9647700526746">
+<i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<a href="https://maps.google.com">
+<i class="fa-solid fa-location-dot"></i>
+</a>
+
+</div>
+
+<p class="creator">
+website by: Haryad Khalid
+</p>
+
+<audio autoplay loop>
+<source src="music.mp3">
+</audio>
+
+</div>
+
+<script>
+
+function sendBooking(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let service=document.getElementById("service").value
+let date=document.getElementById("date").value
+let time=document.getElementById("time").value
+
+let message=
+"Booking Request%0A"+
+"Name: "+name+"%0A"+
+"Phone: "+phone+"%0A"+
+"Service: "+service+"%0A"+
+"Date: "+date+"%0A"+
+"Time: "+time
+
+window.open("https://wa.me/9647700526746?text="+message)
+
+}
+
+</script>
+
+</body>
+</html>
