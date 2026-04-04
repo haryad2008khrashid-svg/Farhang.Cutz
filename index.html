@@ -168,7 +168,6 @@
         .fa-viber { color: #7360f2; }
         .fa-phone { color: #00b7ff; }
 
-        /* Footer Info Fix */
         .footer-info {
             margin-top: 40px;
             padding: 20px;
@@ -179,10 +178,9 @@
         .footer-info b { color: #00ffd5; }
         .footer-info i { color: #00ffd5; }
         
-        /* ئەمە ژمارەکە ڕێک دەخاتەوە */
         .phone-num {
             display: inline-block;
-            direction: ltr; /* چەپ بۆ ڕاست بۆ ژمارە مۆبایل */
+            direction: ltr;
             unicode-bidi: embed;
             margin-top: 5px;
         }
@@ -236,7 +234,7 @@
         </select>
 
         <input type="date" id="uDate">
-        <input type="time" id="uTime" step="1200">
+        <input type="time" id="uTime">
         
         <button class="btn-send whatsapp-btn" onclick="sendToApp('wa')">
             <i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ
@@ -262,6 +260,9 @@
 </div>
 
 <script>
+// لیستی حجزەکان لێرە پاشەکەوت دەبێت لەناو مۆبایلەکەدا
+let bookedSlots = JSON.parse(localStorage.getItem('farhang_bookings')) || [];
+
 function sendToApp(app) {
     const name = document.getElementById("uName").value;
     const phone = document.getElementById("uPhone").value;
@@ -274,11 +275,24 @@ function sendToApp(app) {
         return;
     }
 
-    const minutes = parseInt(time.split(":")[1]);
-    if (minutes % 20 !== 0) {
-        alert("تکایە کاتێک هەڵبژێرە کە ٢٠ خولەک جیاوازی هەبێت (وەک 3:00، 3:20، 3:40)");
+    // پشکنین بۆ کاتی ٢٠ خولەک
+    const newBookingTime = new Date(`${date}T${time}`).getTime();
+    const twentyMinutes = 20 * 60 * 1000;
+
+    const isOverlap = bookedSlots.some(slot => {
+        const existingTime = new Date(`${slot.date}T${slot.time}`).getTime();
+        // ئەگەر کاتەکە لە ٢٠ خولەک کەمتر بێت، ڕێگری دەکات
+        return Math.abs(newBookingTime - existingTime) < twentyMinutes;
+    });
+
+    if (isOverlap) {
+        alert("ببوورە، ئەم کاتە پێشتر گیراوە یان زۆر نزیکە لە حجزێکی تر. تکایە کاتێک هەڵبژێرە کە ٢٠ خولەک جیاوازی هەبێت.");
         return;
     }
+
+    // پاشەکەوتکردنی حجزە نوێیەکە
+    bookedSlots.push({ date, time });
+    localStorage.setItem('farhang_bookings', JSON.stringify(bookedSlots));
 
     const text = `*داواکاری حجزی نوێ*%0A` +
                  `--------------------%0A` +
