@@ -78,7 +78,6 @@
             font-weight: bold;
         }
 
-        /* Info Section */
         .info-box {
             background: rgba(255, 255, 255, 0.05);
             padding: 15px;
@@ -93,7 +92,6 @@
         .info-box i { color: #00ffd5; margin-left: 10px; }
         .vip-alert { color: #ffcc00 !important; font-weight: bold; }
 
-        /* Price List Grid */
         .price-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -103,23 +101,18 @@
 
         .price-card {
             background: #151515;
-            padding: 15px;
+            padding: 20px 10px;
             border-radius: 15px;
             border: 1px solid #222;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
         .price-card:hover { border-color: #00ffd5; transform: scale(1.03); }
 
-        .price-card span {
-            display: block;
-            color: #00ffd5;
-            font-size: 18px;
-            margin-top: 8px;
-            font-weight: bold;
-        }
-
-        /* Booking Form */
         .booking-form {
             margin-top: 35px;
             padding: 20px;
@@ -189,7 +182,6 @@
             color: #888;
         }
         .footer-info b { color: #00ffd5; }
-        .footer-info i { color: #00ffd5; }
         
         .phone-num {
             display: inline-block;
@@ -218,19 +210,19 @@
         <p class="vip-alert"><i class="fa-solid fa-star"></i> بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حیجز بکەن پێش کاتی خۆی.</p>
     </div>
 
-    <h2>لیستی نرخەکان</h2>
+    <h2>خزمەتگوزارییەکان</h2>
     <div class="price-grid">
-        <div class="price-card">سەرچاکردن 
-        <div class="price-card">سەرچاکردن + ڕیش 
-        <div class="price-card">سەر + ڕیش + داهێنان 
-        <div class="price-card">بڕینی ئەکادیمی مەقەست 
-        <div class="price-card">سەرچاکردنی VIP
-        <div class="price-card">ڕازاندنەوەی زاوا 
-        <div class="price-card">هایدرۆفیشاڵ 
-        <div class="price-card">کریاتین و پڕۆتین 
-        <div class="price-card">ڕیش چاکردن 
-        <div class="price-card">قژ داهێنان 
-        <div class="price-card">ڕەنگکردنی قژ  
+        <div class="price-card">سەرچاکردن</div>
+        <div class="price-card">سەرچاکردن + ڕیش</div>
+        <div class="price-card">سەر + ڕیش + داهێنان</div>
+        <div class="price-card">بڕینی ئەکادیمی مەقەست</div>
+        <div class="price-card">سەرچاکردنی VIP</div>
+        <div class="price-card">ڕازاندنەوەی زاوا</div>
+        <div class="price-card">هایدرۆفیشاڵ</div>
+        <div class="price-card">کریتین و پڕۆتین</div>
+        <div class="price-card">ڕیش چاکردن</div>
+        <div class="price-card">قژ داهێنان</div>
+        <div class="price-card">ڕەنگکردنی قژ</div> 
     </div>
 
     <h2>داواکردنی حجز</h2>
@@ -246,7 +238,7 @@
             <option>VIP</option>
             <option>ڕازاندنەوەی زاوا</option>
             <option>هایدرۆفیشاڵ</option>
-            <option>کریاتین و پڕۆتین</option>
+            <option>کریتین و پڕۆتین</option>
         </select>
 
         <div class="input-group">
