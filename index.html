@@ -227,4 +227,117 @@
 
     <h2>خزمەتگوزارییەکان</h2>
     <div class="price-grid">
-        <div class="price-card">سەر
+        <div class="price-card">سەرچاکردن</div>
+        <div class="price-card">سەرچاکردن + ڕیش</div>
+        <div class="price-card">سەر + ڕیش + داهێنان</div>
+        <div class="price-card">بڕینی ئەکادیمی مەقەست</div>
+        <div class="price-card">سەرچاکردنی VIP</div>
+        <div class="price-card">ڕازاندنەوەی زاوا</div>
+        <div class="price-card">هایدرۆفیشاڵ</div>
+        <div class="price-card">کریاتین و پڕۆتین</div>
+        <div class="price-card">ڕیش چاکردن</div>
+        <div class="price-card">قژ داهێنان</div>
+        <div class="price-card">ڕەنگکردنی قژ</div> 
+    </div>
+
+    <h2>داواکردنی حجز</h2>
+    <div class="booking-form">
+        <input id="uName" placeholder="ناوی تەواو">
+        <input id="uPhone" type="tel" placeholder="ژمارەی مۆبایل">
+        
+        <select id="uService">
+            <option>سەرچاکردن</option>
+            <option>سەرچاکردن + ڕیش</option>
+            <option>سەر + ڕیش + داهێنان</option>
+            <option>بڕینی ئەکادیمی</option>
+            <option>VIP</option>
+            <option>ڕازاندنەوەی زاوا</option>
+            <option>هایدرۆفیشاڵ</option>
+            <option>کریاتین و پڕۆتین</option>
+            <option>ڕیش چاکردن</option>
+            <option>قژ داهێنان</option>
+            <option>ڕەنگکردنی قژ</option>
+        </select>
+
+        <div class="input-group">
+            <label>بەرواری حجزکردن:</label>
+            <input type="date" id="uDate">
+        </div>
+
+        <div class="input-group">
+            <label>کاتی حجزکردن:</label>
+            <input type="time" id="uTime">
+        </div>
+        
+        <button class="btn-send whatsapp-btn" onclick="sendToApp('wa')">
+            <i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ
+        </button>
+
+        <button class="btn-send viber-btn" onclick="sendToApp('vi')">
+            <i class="fa-brands fa-viber"></i> ناردن بۆ ڤایبەر
+        </button>
+    </div>
+
+    <div class="contact-icons">
+        <a href="tel:07700526746"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/9647700526746"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="viber://chat?number=9647700526746"><i class="fa-brands fa-viber"></i></a>
+    </div>
+
+    <div class="footer-info">
+        <p>Website created by: <b>Haryad Khalid</b></p>
+        <div class="phone-num">
+            <i class="fa-solid fa-mobile-screen-button"></i> 0776 692 47 32
+        </div>
+    </div>
+</div>
+
+<script>
+let bookedSlots = JSON.parse(localStorage.getItem('farhang_bookings')) || [];
+
+function sendToApp(app) {
+    const name = document.getElementById("uName").value;
+    const phone = document.getElementById("uPhone").value;
+    const service = document.getElementById("uService").value;
+    const date = document.getElementById("uDate").value;
+    const time = document.getElementById("uTime").value;
+
+    if(!name || !phone || !date || !time) {
+        alert("تکایە هەموو خانەکان پڕ بکەرەوە");
+        return;
+    }
+
+    const newBookingTime = new Date(`${date}T${time}`).getTime();
+    const twentyMinutes = 20 * 60 * 1000;
+
+    const isOverlap = bookedSlots.some(slot => {
+        const existingTime = new Date(`${slot.date}T${slot.time}`).getTime();
+        return Math.abs(newBookingTime - existingTime) < twentyMinutes;
+    });
+
+    if (isOverlap) {
+        alert("ببوورە، ئەم کاتە پێشتر گیراوە یان زۆر نزیکە لە حجزێکی تر. تکایە کاتێک هەڵبژێرە کە ٢٠ خولەک جیاوازی هەبێت.");
+        return;
+    }
+
+    bookedSlots.push({ date, time });
+    localStorage.setItem('farhang_bookings', JSON.stringify(bookedSlots));
+
+    const text = `*داواکاری حجزی نوێ*%0A` +
+                 `--------------------%0A` +
+                 `👤 ناو: ${name}%0A` +
+                 `📞 مۆبایل: ${phone}%0A` +
+                 `✂️ کار: ${service}%0A` +
+                 `📅 بەرواری حجز: ${date}%0A` +
+                 `⏰ کاتی حجز: ${time}`;
+
+    if(app === 'wa') {
+        window.open(`https://wa.me/9647700526746?text=${text}`);
+    } else {
+        window.open(`viber://pa?chatURI&text=${text}`);
+    }
+}
+</script>
+
+</body>
+</html>
