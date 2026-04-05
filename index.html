@@ -103,15 +103,21 @@
             background: #151515;
             padding: 20px 10px;
             border-radius: 15px;
-            border: 1px solid #222;
+            border: 1px solid #00ffd5; /* لێرە ڕەنگی چوارچێوەکەمان گۆڕی */
+            color: #00ffd5;            /* لێرە ڕەنگی نووسینەکەمان گۆڕی */
             transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 255, 213, 0.1);
         }
 
-        .price-card:hover { border-color: #00ffd5; transform: scale(1.03); }
+        .price-card:hover { 
+            background: #00ffd5; 
+            color: black; 
+            transform: scale(1.03); 
+        }
 
         .booking-form {
             margin-top: 35px;
@@ -219,7 +225,7 @@
         <div class="price-card">سەرچاکردنی VIP</div>
         <div class="price-card">ڕازاندنەوەی زاوا</div>
         <div class="price-card">هایدرۆفیشاڵ</div>
-        <div class="price-card">کریتین و پڕۆتین</div>
+        <div class="price-card">کریاتین و پڕۆتین</div>
         <div class="price-card">ڕیش چاکردن</div>
         <div class="price-card">قژ داهێنان</div>
         <div class="price-card">ڕەنگکردنی قژ</div> 
@@ -238,7 +244,10 @@
             <option>VIP</option>
             <option>ڕازاندنەوەی زاوا</option>
             <option>هایدرۆفیشاڵ</option>
-            <option>کریتین و پڕۆتین</option>
+            <option>کریاتین و پڕۆتین</option>
+            <option>ڕیش چاکردن</option>
+            <option>قژ داهێنان</option>
+            <option>ڕەنگکردنی قژ</option>
         </select>
 
         <div class="input-group">
