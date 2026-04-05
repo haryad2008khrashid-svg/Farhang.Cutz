@@ -103,8 +103,8 @@
             background: #151515;
             padding: 20px 10px;
             border-radius: 15px;
-            border: 1px solid #00ffd5; /* لێرە ڕەنگی چوارچێوەکەمان گۆڕی */
-            color: #00ffd5;            /* لێرە ڕەنگی نووسینەکەمان گۆڕی */
+            border: 1px solid #00ffd5;
+            color: #00ffd5;
             transition: 0.3s;
             display: flex;
             align-items: center;
@@ -148,8 +148,16 @@
             border: 1px solid #333;
             background: #1a1a1a;
             color: white;
-            text-align: center;
+            text-align: center; /* ناوەڕاستکردنی دەقی ناو خانەکان */
             font-size: 15px;
+            display: inline-block;
+        }
+
+        /* تایبەت بۆ خانەی بەروار و کات بۆ ئەوەی ڕێک لە ناوەڕاست بن */
+        input[type="date"], input[type="time"] {
+            text-align: center;
+            justify-content: center;
+            direction: ltr; /* بۆ ئەوەی نیشانەکانی ناوەڕاست تێک نەچن */
         }
 
         .btn-send {
@@ -176,159 +184,3 @@
 
         .contact-icons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
         .contact-icons a { font-size: 30px; color: white; text-decoration: none; transition: 0.3s; }
-        .fa-whatsapp { color: #25D366; }
-        .fa-viber { color: #7360f2; }
-        .fa-phone { color: #00b7ff; }
-
-        .footer-info {
-            margin-top: 40px;
-            padding: 20px;
-            border-top: 1px solid #222;
-            font-size: 13px;
-            color: #888;
-        }
-        .footer-info b { color: #00ffd5; }
-        
-        .phone-num {
-            display: inline-block;
-            direction: ltr;
-            unicode-bidi: embed;
-            margin-top: 5px;
-        }
-    </style>
-</head>
-<body>
-
-<div class="stars"></div>
-<div class="pole"></div>
-
-<div class="container">
-    <img src="logo.png" class="logo" alt="Farhang Cutz">
-    <h1>Farhang Cutz</h1>
-
-    <div class="time">
-        <i class="fa-solid fa-clock"></i> کاتی کارکردن: 2PM - 11PM
-    </div>
-
-    <div class="info-box">
-        <p><i class="fa-solid fa-calendar-check"></i> ڕۆژێک پێش سەردانی کردن حجز بکە.</p>
-        <p><i class="fa-solid fa-triangle-exclamation"></i> پێش کاتی خۆی لە دوکان ئامادە بن، بە پێچەوانەوە حجزەکەتان ئەفەوتێ.</p>
-        <p class="vip-alert"><i class="fa-solid fa-star"></i> بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حیجز بکەن پێش کاتی خۆی.</p>
-    </div>
-
-    <h2>خزمەتگوزارییەکان</h2>
-    <div class="price-grid">
-        <div class="price-card">سەرچاکردن</div>
-        <div class="price-card">سەرچاکردن + ڕیش</div>
-        <div class="price-card">سەر + ڕیش + داهێنان</div>
-        <div class="price-card">بڕینی ئەکادیمی مەقەست</div>
-        <div class="price-card">سەرچاکردنی VIP</div>
-        <div class="price-card">ڕازاندنەوەی زاوا</div>
-        <div class="price-card">هایدرۆفیشاڵ</div>
-        <div class="price-card">کریاتین و پڕۆتین</div>
-        <div class="price-card">ڕیش چاکردن</div>
-        <div class="price-card">قژ داهێنان</div>
-        <div class="price-card">ڕەنگکردنی قژ</div> 
-    </div>
-
-    <h2>داواکردنی حجز</h2>
-    <div class="booking-form">
-        <input id="uName" placeholder="ناوی تەواو">
-        <input id="uPhone" type="tel" placeholder="ژمارەی مۆبایل">
-        
-        <select id="uService">
-            <option>سەرچاکردن</option>
-            <option>سەرچاکردن + ڕیش</option>
-            <option>سەر + ڕیش + داهێنان</option>
-            <option>بڕینی ئەکادیمی</option>
-            <option>VIP</option>
-            <option>ڕازاندنەوەی زاوا</option>
-            <option>هایدرۆفیشاڵ</option>
-            <option>کریاتین و پڕۆتین</option>
-            <option>ڕیش چاکردن</option>
-            <option>قژ داهێنان</option>
-            <option>ڕەنگکردنی قژ</option>
-        </select>
-
-        <div class="input-group">
-            <label>بەرواری حجزکردن:</label>
-            <input type="date" id="uDate">
-        </div>
-
-        <div class="input-group">
-            <label>کاتی حجزکردن:</label>
-            <input type="time" id="uTime">
-        </div>
-        
-        <button class="btn-send whatsapp-btn" onclick="sendToApp('wa')">
-            <i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ
-        </button>
-
-        <button class="btn-send viber-btn" onclick="sendToApp('vi')">
-            <i class="fa-brands fa-viber"></i> ناردن بۆ ڤایبەر
-        </button>
-    </div>
-
-    <div class="contact-icons">
-        <a href="tel:07700526746"><i class="fa-solid fa-phone"></i></a>
-        <a href="https://wa.me/9647700526746"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="viber://chat?number=9647700526746"><i class="fa-brands fa-viber"></i></a>
-    </div>
-
-    <div class="footer-info">
-        <p>Website created by: <b>Haryad Khalid</b></p>
-        <div class="phone-num">
-            <i class="fa-solid fa-mobile-screen-button"></i> 0776 692 47 32
-        </div>
-    </div>
-</div>
-
-<script>
-let bookedSlots = JSON.parse(localStorage.getItem('farhang_bookings')) || [];
-
-function sendToApp(app) {
-    const name = document.getElementById("uName").value;
-    const phone = document.getElementById("uPhone").value;
-    const service = document.getElementById("uService").value;
-    const date = document.getElementById("uDate").value;
-    const time = document.getElementById("uTime").value;
-
-    if(!name || !phone || !date || !time) {
-        alert("تکایە هەموو خانەکان پڕ بکەرەوە");
-        return;
-    }
-
-    const newBookingTime = new Date(`${date}T${time}`).getTime();
-    const twentyMinutes = 20 * 60 * 1000;
-
-    const isOverlap = bookedSlots.some(slot => {
-        const existingTime = new Date(`${slot.date}T${slot.time}`).getTime();
-        return Math.abs(newBookingTime - existingTime) < twentyMinutes;
-    });
-
-    if (isOverlap) {
-        alert("ببوورە، ئەم کاتە پێشتر گیراوە یان زۆر نزیکە لە حجزێکی تر. تکایە کاتێک هەڵبژێرە کە ٢٠ خولەک جیاوازی هەبێت.");
-        return;
-    }
-
-    bookedSlots.push({ date, time });
-    localStorage.setItem('farhang_bookings', JSON.stringify(bookedSlots));
-
-    const text = `*داواکاری حجزی نوێ*%0A` +
-                 `--------------------%0A` +
-                 `👤 ناو: ${name}%0A` +
-                 `📞 مۆبایل: ${phone}%0A` +
-                 `✂️ کار: ${service}%0A` +
-                 `📅 بەرواری حجز: ${date}%0A` +
-                 `⏰ کاتی حجز: ${time}`;
-
-    if(app === 'wa') {
-        window.open(`https://wa.me/9647700526746?text=${text}`);
-    } else {
-        window.open(`viber://pa?chatURI&text=${text}`);
-    }
-}
-</script>
-
-</body>
-</html>
