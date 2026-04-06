@@ -6,60 +6,64 @@
     <title>Farhang Cutz - Management System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --main-cyan: #00ffd5; --error-red: #ff4d4d; }
+        :root { --main-cyan: #00ffd5; --error-red: #ff3333; }
         body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; color: white; text-align: center; background: black; overflow-x: hidden; }
         
+        /* Background Stars */
         .stars { position: fixed; width: 100%; height: 100%; background: url("https://www.transparenttextures.com/patterns/stardust.png"); animation: move 60s linear infinite; z-index: -1; }
         @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 1000px 1000px; } }
 
         .container { max-width: 600px; margin: auto; padding: 20px; background: rgba(0, 0, 0, 0.9); border-radius: 25px; margin-top: 40px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 213, 0.2); }
         
         .logo { width: 150px; margin-bottom: 10px; }
+        .time-info { background: #1a1a1a; padding: 12px; border-radius: 12px; margin: 15px auto; width: fit-content; border: 1px solid var(--main-cyan); color: var(--main-cyan); font-weight: bold; }
+        
         .vip-alert { color: #ffcc00 !important; font-weight: bold; font-size: 14px; border: 1px solid #ffcc00; padding: 10px; border-radius: 10px; margin: 15px 0; }
 
-        /* Price Grid چاککردنی مەجالی سڕینەوە */
-        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; padding: 10px; }
+        /* Services Grid */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; padding: 10px; }
         .price-card { 
             background: #151515; padding: 20px 10px; border-radius: 15px; border: 1px solid var(--main-cyan); 
-            color: var(--main-cyan); font-weight: bold; position: relative; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; min-height: 50px;
-        }
-        
-        /* باشترکردنی شوێنی دوگمەی سڕینەوە */
-        .delete-btn { 
-            position: absolute; 
-            top: -10px; 
-            left: -10px; 
-            background: #ff0000; 
-            color: white; 
-            border-radius: 50%; 
-            width: 25px; 
-            height: 25px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            display: none; 
-            line-height: 22px; 
-            border: 2px solid white;
-            z-index: 5;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            color: var(--main-cyan); font-weight: bold; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; min-height: 55px;
         }
 
-        .booking-form { margin-top: 30px; padding: 20px; background: #0d0d0d; border-radius: 20px; border: 1px solid #222; }
-        input, select, button { 
-            width: 90%; padding: 12px; margin-bottom: 15px; border-radius: 10px; 
-            border: 1px solid #333; background: #1a1a1a; color: white; text-align: center; font-size: 15px;
-        }
-        .input-error { border: 2px solid var(--error-red) !important; color: var(--error-red) !important; }
-        .btn-send { background: #25D366; font-weight: bold; cursor: pointer; border: none; font-size: 17px; }
-        .off-day-banner { background: rgba(255, 77, 77, 0.2); color: var(--error-red); padding: 15px; border-radius: 15px; display: none; margin-bottom: 15px; border: 1px solid var(--error-red); }
+        /* Booking Form */
+        .booking-form { margin-top: 35px; padding: 20px; background: #0d0d0d; border-radius: 20px; border: 1px solid #222; }
+        input, select, button { width: 92%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; background: #1a1a1a; color: white; text-align: center; font-size: 15px; }
+        .input-error { border: 2px solid var(--error-red) !important; color: var(--error-red) !important; background: rgba(255, 51, 51, 0.1) !important; }
+        .btn-send { background: #25D366; font-weight: bold; cursor: pointer; border: none; font-size: 17px; color: white; }
+        .off-day-banner { background: rgba(255, 51, 51, 0.2); color: var(--error-red); padding: 15px; border-radius: 15px; display: none; margin-bottom: 15px; border: 1px solid var(--error-red); font-weight: bold; }
 
-        .admin-trigger { position: fixed; bottom: 10px; right: 10px; font-size: 12px; color: #444; cursor: pointer; opacity: 0.5; }
+        /* Admin Styles */
+        .admin-trigger { position: fixed; bottom: 15px; right: 15px; font-size: 11px; color: #444; cursor: pointer; opacity: 0.5; }
         #adminPanel { 
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             width: 90%; max-width: 400px; background: #111; border: 2px solid var(--main-cyan); 
-            padding: 25px; border-radius: 20px; z-index: 1000; box-shadow: 0 0 50px black;
+            padding: 20px; border-radius: 20px; z-index: 1000; box-shadow: 0 0 100px black;
         }
-        .admin-close { background: #444; margin-top: 10px; }
+
+        /* Admin Service List with Scroll */
+        .services-list-admin {
+            max-height: 180px;
+            overflow-y: auto;
+            background: #000;
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: right;
+        }
+        .admin-service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #222;
+        }
+        .del-icon { color: var(--error-red); cursor: pointer; font-size: 18px; }
+        .services-list-admin::-webkit-scrollbar { width: 5px; }
+        .services-list-admin::-webkit-scrollbar-thumb { background: var(--main-cyan); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -68,9 +72,13 @@
 
 <div class="container">
     <img src="logo.png" class="logo" alt="Farhang Cutz">
-    <h1 style="color: var(--main-cyan); margin-bottom: 5px;">Farhang Cutz</h1>
+    <h1 style="color: var(--main-cyan);">Farhang Cutz</h1>
     
-    <div id="offDayBanner" class="off-day-banner">⚠️ ببوورە، ئەمڕۆ دوکان داخراوە و حجز وەرناگیرێت.</div>
+    <div class="time-info">
+        <i class="fa-solid fa-clock"></i> کاتی کارکردن: 2PM - 11PM
+    </div>
+
+    <div id="offDayBanner" class="off-day-banner">⚠️ تەواوی ئەمڕۆ حجز کراوە یان دوکان داخراوە!</div>
 
     <div class="vip-alert">
         <i class="fa-solid fa-star"></i> بۆ کاتکردنی VIP لە ١٠ی بەیانی بۆ ١٢ی نیوەڕۆ، ڕۆژێک پێش مۆعیدەکە حجز بکەن.
@@ -83,41 +91,43 @@
     <div class="booking-form" id="bookingArea">
         <h2>داواکردنی حجز</h2>
         <p id="statusLabel" style="font-size: 13px;"></p>
-        
         <input id="uName" placeholder="ناوی تەواو">
         <input id="uPhone" type="tel" placeholder="ژمارەی مۆبایل">
-        
         <select id="uServiceSelect"></select>
-
         <input type="date" id="uDate" onchange="checkStatus()">
-        <input type="time" id="uTime" oninput="checkStatus()" style="text-align: center;">
-        
-        <button class="btn-send" onclick="sendBooking()">
-            <i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ
-        </button>
+        <input type="time" id="uTime" oninput="checkStatus()">
+        <button class="btn-send" onclick="sendBooking()">ناردن بۆ واتسەپ</button>
     </div>
 </div>
 
-<div class="admin-trigger" onclick="promptLogin()">Admin Login</div>
+<div class="admin-trigger" onclick="promptLogin()">Admin Access</div>
 
 <div id="adminPanel">
     <h3 style="color: var(--main-cyan)">بەڕێوەبردنی سیستم</h3>
-    <hr border="0" height="1" bgcolor="#333">
-    <p>زیادکردنی خزمەتگوزاری نوێ:</p>
-    <input id="newServiceName" placeholder="ناوی خزمەتگوزاری">
+    
+    <p style="font-size: 13px;">زیادکردنی خزمەتگوزاری:</p>
+    <input id="newServiceName" placeholder="ناوی نوێ">
     <button onclick="addService()" style="background: var(--main-cyan); color: black;">زیادکردن</button>
-    <hr border="0" height="1" bgcolor="#333">
-    <p>قفلکردنی ڕۆژ (OFF):</p>
+    
+    <hr border="0" height="1" bgcolor="#222">
+    
+    <p style="font-size: 13px;">سڕینەوەی خزمەتگوزاری (Scroll):</p>
+    <div class="services-list-admin" id="adminServicesList">
+        </div>
+
+    <hr border="0" height="1" bgcolor="#222">
+    <p style="font-size: 13px;">قفلکردنی ڕۆژ (OFF):</p>
     <input type="date" id="offDateInput">
     <button onclick="setOffDay()" style="background: orange; color: black;">دیاریکردنی وەک OFF</button>
-    <button class="admin-close" onclick="logout()">Logout</button>
+
+    <button onclick="logout()" style="background: #444; width: 40%; margin-top: 15px;">دەرچوون</button>
 </div>
 
 <script>
-    let services = JSON.parse(localStorage.getItem('f_services')) || ["سەرچاکردن", "سەرچاکردن + ڕیش", "سەر + ڕیش + داهێنان", "بڕینی ئەکادیمی", "VIP", "ڕازاندنەوەی زاوا", "هایدرۆفیشاڵ", "کریاتین و پڕۆتین", "ڕیش چاکردن", "قژ داهێنان", "ڕەنگکردنی قژ"];
+    // --- Data Storage ---
+    let services = JSON.parse(localStorage.getItem('f_services')) || ["سەرچاکردن", "سەرچاکردن + ڕیش", "سەر + ڕیش + داهێنان", "بڕینی ئەکادیمی", "VIP", "ڕازاندنەوەی زاوا", "هایدرۆفیشاڵ", "کریاتین", "ڕیش چاکردن", "قژ داهێنان", "ڕەنگکردنی قژ"];
     let offDays = JSON.parse(localStorage.getItem('f_offdays')) || [];
     let allBookings = JSON.parse(localStorage.getItem('f_all_bookings')) || [];
-    let isAdmin = false;
 
     function init() {
         renderServices();
@@ -127,34 +137,33 @@
     function renderServices() {
         const grid = document.getElementById('servicesGrid');
         const select = document.getElementById('uServiceSelect');
+        const adminList = document.getElementById('adminServicesList');
+        
         grid.innerHTML = '';
         select.innerHTML = '';
+        adminList.innerHTML = '';
 
         services.forEach((s, index) => {
-            grid.innerHTML += `
-                <div class="price-card">
-                    <span class="delete-btn" style="display: ${isAdmin ? 'block' : 'none'}" onclick="removeService(${index})">×</span>
-                    ${s}
-                </div>`;
+            grid.innerHTML += `<div class="price-card">${s}</div>`;
             select.innerHTML += `<option value="${s}">${s}</option>`;
+            adminList.innerHTML += `
+                <div class="admin-service-item">
+                    <span>${s}</span>
+                    <i class="fa-solid fa-trash-can del-icon" onclick="removeService(${index})"></i>
+                </div>`;
         });
     }
 
+    // --- Admin Logic ---
     function promptLogin() {
-        let pass = prompt("تکایە پاسۆرد بنووسە:");
+        let pass = prompt("پاسۆرد بنووسە:");
         if(pass === "1234") {
-            isAdmin = true;
             document.getElementById('adminPanel').style.display = 'block';
-            renderServices();
-        } else if(pass !== null) {
-            alert("پاسۆرد هەڵەیە!");
         }
     }
 
     function logout() {
-        isAdmin = false;
         document.getElementById('adminPanel').style.display = 'none';
-        renderServices();
     }
 
     function addService() {
@@ -168,9 +177,11 @@
     }
 
     function removeService(index) {
-        services.splice(index, 1);
-        localStorage.setItem('f_services', JSON.stringify(services));
-        renderServices();
+        if(confirm("دڵنیای لە سڕینەوەی ئەم خزمەتگوزارییە؟")) {
+            services.splice(index, 1);
+            localStorage.setItem('f_services', JSON.stringify(services));
+            renderServices();
+        }
     }
 
     function setOffDay() {
@@ -179,42 +190,47 @@
             if(!offDays.includes(date)) {
                 offDays.push(date);
                 localStorage.setItem('f_offdays', JSON.stringify(offDays));
-                alert("ئەم ڕۆژە وەک پشوو دیاریکرا");
+                alert("ئەم ڕۆژە وەک پشوو قفل کرا");
                 checkStatus();
             }
         }
     }
 
+    // --- Booking Status Logic ---
     function checkStatus() {
         const dateVal = document.getElementById('uDate').value;
         const timeVal = document.getElementById('uTime').value;
         const banner = document.getElementById('offDayBanner');
         const area = document.getElementById('bookingArea');
         const statusLabel = document.getElementById('statusLabel');
+        const timeInput = document.getElementById('uTime');
 
+        // Check Off Days
         if(offDays.includes(dateVal)) {
             banner.style.display = 'block';
             area.style.opacity = '0.3';
             area.style.pointerEvents = 'none';
+            return;
         } else {
             banner.style.display = 'none';
             area.style.opacity = '1';
             area.style.pointerEvents = 'all';
         }
 
+        // Check 20 Minute Overlap
         if(dateVal && timeVal) {
             const newTime = new Date(`${dateVal}T${timeVal}`).getTime();
-            const overlap = allBookings.some(b => {
+            const isOverlap = allBookings.some(b => {
                 const oldTime = new Date(`${b.date}T${b.time}`).getTime();
                 return Math.abs(newTime - oldTime) < (20 * 60 * 1000);
             });
 
-            if(overlap) {
-                document.getElementById('uTime').classList.add('input-error');
-                statusLabel.innerText = "❌ ئەم کاتە گیراوە";
+            if(isOverlap) {
+                timeInput.classList.add('input-error');
+                statusLabel.innerText = "❌ ئەم کاتە پێشتر حجز کراوە";
                 statusLabel.style.color = "var(--error-red)";
             } else {
-                document.getElementById('uTime').classList.remove('input-error');
+                timeInput.classList.remove('input-error');
                 statusLabel.innerText = "✅ ئەم کاتە بەردەستە";
                 statusLabel.style.color = "var(--main-cyan)";
             }
@@ -223,17 +239,17 @@
 
     function sendBooking() {
         const name = document.getElementById('uName').value;
-        const phone = document.getElementById('uPhone').value;
-        const service = document.getElementById('uServiceSelect').value;
         const date = document.getElementById('uDate').value;
         const time = document.getElementById('uTime').value;
+        const service = document.getElementById('uServiceSelect').value;
 
-        if(!name || !date || !time) return alert("تکایە خانەکان پڕ بکەرەوە");
+        if(!name || !date || !time) return alert("تکایە هەموو خانەکان پڕ بکەرەوە");
 
+        // Save locally to track availability
         allBookings.push({date, time});
         localStorage.setItem('f_all_bookings', JSON.stringify(allBookings));
 
-        const text = `*حجزی نوێ - Farhang Cutz*%0A👤 ناو: ${name}%0A📞 مۆبایل: ${phone}%0A✂️ خزمەتگوزاری: ${service}%0A📅 بەروار: ${date}%0A⏰ کات: ${time}`;
+        const text = `*حجزی نوێ - Farhang Cutz*%0A👤 ناو: ${name}%0A✂️ خزمەتگوزاری: ${service}%0A📅 بەروار: ${date}%0A⏰ کات: ${time}`;
         window.open(`https://wa.me/9647700526746?text=${text}`);
     }
 
