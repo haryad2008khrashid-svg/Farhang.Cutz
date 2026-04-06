@@ -17,7 +17,6 @@
         .logo { width: 150px; margin-bottom: 10px; }
         .time-info { background: #1a1a1a; padding: 12px; border-radius: 12px; margin: 15px auto; width: fit-content; border: 1px solid var(--main-cyan); color: var(--main-cyan); font-weight: bold; }
         
-        /* تێبینییەکان ڕێک وەک وێنەکە */
         .info-box { background: rgba(15, 15, 15, 0.8); padding: 20px; border-radius: 20px; border-right: 4px solid var(--main-cyan); text-align: right; margin: 20px 0; }
         .info-item { display: flex; align-items: center; margin-bottom: 10px; font-size: 14px; }
         .info-item i { margin-left: 10px; color: var(--main-cyan); }
@@ -29,9 +28,11 @@
         .booking-form { margin-top: 35px; padding: 20px; background: #0d0d0d; border-radius: 20px; border: 1px solid #222; }
         input, select, button { width: 92%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; background: #1a1a1a; color: white; text-align: center; font-size: 15px; }
         .btn-send { background: #25D366; font-weight: bold; cursor: pointer; border: none; font-size: 17px; color: white; }
+        
+        /* بانەری ئاگادارکردنەوەی ڕۆژی پشوو */
         .off-day-banner { background: rgba(255, 51, 51, 0.2); color: var(--error-red); padding: 15px; border-radius: 15px; display: none; margin-bottom: 15px; border: 1px solid var(--error-red); font-weight: bold; }
 
-        /* Admin Panel & Scroll */
+        /* Admin Styles */
         .admin-trigger { position: fixed; bottom: 15px; right: 15px; font-size: 11px; color: #444; cursor: pointer; }
         #adminPanel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 420px; background: #111; border: 2px solid var(--main-cyan); padding: 20px; border-radius: 25px; z-index: 1000; box-shadow: 0 0 100px black; }
         
@@ -55,7 +56,7 @@
         <i class="fa-solid fa-clock"></i> کاتی کارکردن: 2PM - 11PM
     </div>
 
-    <div id="offDayBanner" class="off-day-banner">⚠️ ببوورە، ئەمڕۆ دوکان داخراوە و حجز وەرناگیرێت.</div>
+    <div id="offDayBanner" class="off-day-banner">⚠️ ببوورە، ئەمڕۆ دوکان داخراوە! تکایە ڕۆژێکی تر هەڵبژێرە.</div>
 
     <div class="info-box">
         <div class="info-item"><i class="fa-solid fa-calendar-check"></i> ڕۆژێک پێش سەردانی کردن حجز بکە.</div>
@@ -83,20 +84,17 @@
 <div id="adminPanel">
     <h3 style="color: var(--main-cyan);">بەڕێوەبردنی سیستم</h3>
     
+    <p style="font-size: 12px; text-align: right;">زیادکردنی خزمەتگوزاری:</p>
     <input id="newServiceName" placeholder="ناوی خزمەتگوزاری نوێ">
     <button onclick="addService()" style="background: var(--main-cyan); color: black; font-weight: bold;">زیادکردن</button>
     
-    <div class="admin-scroll-section" id="adminServicesList"></div>
-
-    <hr border="0" height="1" bgcolor="#222">
+    <div class="admin-scroll-section" id="adminServicesList"></div> <hr border="0" height="1" bgcolor="#222">
     
-    <div style="text-align: right; font-size: 13px;">قفلکردنی ڕۆژ (OFF):</div>
+    <p style="font-size: 12px; text-align: right;">قفلکردنی ڕۆژ (OFF):</p>
     <input type="date" id="offDateInput">
-    <button onclick="setOffDay()" style="background: orange; color: black; font-weight: bold;">دیاریکردن</button>
+    <button onclick="setOffDay()" style="background: orange; color: black; font-weight: bold;">دیاریکردن وەک OFF</button>
     
-    <div class="admin-scroll-section" id="adminOffDaysList"></div>
-
-    <button onclick="logout()" style="background: #333; width: 45%; margin-top: 10px;">Logout</button>
+    <div class="admin-scroll-section" id="adminOffDaysList"></div> <button onclick="logout()" style="background: #333; width: 45%; margin-top: 10px;">Logout</button>
 </div>
 
 <script>
@@ -141,12 +139,20 @@
 
     function removeOffDay(i) { offDays.splice(i, 1); localStorage.setItem('f_offdays', JSON.stringify(offDays)); render(); checkStatus(); }
 
+    // ئەم بەشە پشکنین دەکات: ئەگەر ڕۆژەکە OFF بوو، فۆرمەکە دادەخرێت
     function checkStatus() {
         let selectedDate = document.getElementById('uDate').value;
         let isOff = offDays.includes(selectedDate);
-        document.getElementById('offDayBanner').style.display = isOff ? 'block' : 'none';
-        document.getElementById('bookingArea').style.opacity = isOff ? '0.3' : '1';
-        document.getElementById('bookingArea').style.pointerEvents = isOff ? 'none' : 'all';
+        
+        if(isOff) {
+            document.getElementById('offDayBanner').style.display = 'block';
+            document.getElementById('bookingArea').style.opacity = '0.2';
+            document.getElementById('bookingArea').style.pointerEvents = 'none';
+        } else {
+            document.getElementById('offDayBanner').style.display = 'none';
+            document.getElementById('bookingArea').style.opacity = '1';
+            document.getElementById('bookingArea').style.pointerEvents = 'all';
+        }
     }
 
     function sendBooking() {
@@ -154,7 +160,8 @@
         const s = document.getElementById('uServiceSelect').value;
         const d = document.getElementById('uDate').value;
         const t = document.getElementById('uTime').value;
-        if(!n || !d || !t) return alert("خانەکان پڕ بکەرەوە");
+        if(!n || !d || !t) return alert("تکایە خانەکان پڕ بکەرەوە");
+        
         window.open(`https://wa.me/9647700526746?text=حجزی نوێ:%0Aناو: ${n}%0Aکار: ${s}%0Aبەروار: ${d}%0Aکات: ${t}`);
     }
 
