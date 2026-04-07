@@ -40,6 +40,12 @@
 
         #adminPanel { display: none; background: #111; color: white; padding: 20px; border: 2px dashed var(--main-cyan); border-radius: 20px; margin-top: 20px; text-align: right; }
         .admin-item { display: flex; justify-content: space-between; background: #222; padding: 10px; margin-bottom: 5px; border-radius: 8px; }
+        
+        /* شاردنەوەی ئایکۆنی ناوەکی بۆ کات و بەروار بۆ ئەوەی جوانتر دیار بێت */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
     </style>
 </head>
 <body>
@@ -65,9 +71,15 @@
             <input id="userName" placeholder="ناوی سیانی">
             <input id="userPhone" placeholder="ژمارەی مۆبایل">
             <select id="serviceSelect"></select>
-            <input type="date" id="bookDate" placeholder="بەرواری حجز کردن" onchange="checkHoliday()">
+            
+            <label style="display:block; text-align:right; font-size:12px; margin-bottom:2px; color:var(--main-cyan);">بەروار حجز بکە</label>
+            <input type="date" id="bookDate" onchange="checkHoliday()">
+            
             <div id="holidayNotice" style="color:#ff4d4d; display:none; margin:10px 0; font-weight: bold;">ببورە لەم بەروارەدا پشووە 🚩</div>
-            <input type="time" id="bookTime" placeholder="کاتی حجز کردن">
+            
+            <label style="display:block; text-align:right; font-size:12px; margin-bottom:2px; color:var(--main-cyan);">کات حجز بکە</label>
+            <input type="time" id="bookTime">
+            
             <button class="btn-send whatsapp" onclick="send('WA')"><i class="fab fa-whatsapp"></i> ناردن بۆ واتسئەپ</button>
             <button class="btn-send viber" onclick="send('VB')"><i class="fab fa-viber"></i> ناردن بۆ ڤایبەر</button>
         </div>
@@ -83,7 +95,7 @@
             0776 692 47 32 📲
         </div>
 
-        <button onclick="loginAdmin()" style="background:transparent; border:none; color:#111; margin-top:40px; display: block; width: 100%;">Admin</button>
+        <button onclick="loginAdmin()" style="background:transparent; border:none; color:#ffffff; margin-top:40px; display: block; width: 100%; cursor: pointer;">Admin</button>
         
         <div id="adminPanel">
             <h3 style="color:white;">بەڕێوەبردن</h3>
