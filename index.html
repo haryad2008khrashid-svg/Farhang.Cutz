@@ -3,195 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farhang Cutz</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Farhang Cutz | وێبسایتی فەرمی</title>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
     <style>
-        :root { --main-cyan: #00ffd5; --viber-purple: #7360f2; --whatsapp-green: #25D366; --error-red: #ff3333; }
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; color: white; text-align: center; background: black; overflow-x: hidden; }
+        :root { --main-cyan: #00ffd5; --red: #ff4444; --bg: #000; --card: #0a0a0a; }
+        body { background: var(--bg); color: white; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; direction: rtl; }
+        .container { max-width: 550px; margin: auto; padding-bottom: 50px; }
+
+        /* Header Style */
+        .logo-area { margin-top: 30px; position: relative; display: flex; justify-content: center; align-items: center; }
+        .logo-img { width: 190px; border-radius: 50%; border: 1px solid #fff; padding: 3px; background: #fff; }
+        .barber-pole { position: absolute; right: 20px; top: -10px; width: 45px; height: 140px; background: repeating-linear-gradient(-45deg, #fff, #fff 15px, #f00 15px, #f00 30px, #fff 30px, #fff 45px, #00f 45px, #00f 60px); border-radius: 30px; border: 4px solid #333; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
         
-        .stars { position: fixed; width: 100%; height: 100%; background: url("https://www.transparenttextures.com/patterns/stardust.png"); animation: move 60s linear infinite; z-index: -1; }
-        @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 1000px 1000px; } }
+        h1 { font-size: 35px; margin: 20px 0 10px; letter-spacing: 1px; }
+        .work-time { display: inline-block; border: 1px solid var(--main-cyan); color: var(--main-cyan); padding: 12px 30px; border-radius: 15px; font-weight: bold; margin-bottom: 25px; font-size: 16px; background: rgba(0, 255, 213, 0.05); }
 
-        .container { max-width: 600px; margin: auto; padding: 20px; background: rgba(0, 0, 0, 0.9); border-radius: 25px; margin-top: 40px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 213, 0.2); }
-        .logo { width: 150px; margin-bottom: 10px; }
+        /* Notes Section (دیزاینی وێنەی یەکەم) */
+        .notes-box { background: var(--card); padding: 20px; border-radius: 15px; text-align: right; border-right: 5px solid var(--main-cyan); margin: 15px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        .note-item { display: flex; align-items: flex-start; margin-bottom: 15px; font-size: 15px; color: #eee; line-height: 1.6; }
+        .note-item span { margin-left: 12px; font-size: 20px; }
+
+        /* Services Grid (دیزاینی وێنەی دووەم) */
+        .services-section { margin-top: 40px; }
+        .services-section h3 { font-size: 24px; margin-bottom: 20px; color: #fff; }
+        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .service-btn { border: 1.5px solid var(--main-cyan); background: transparent; color: var(--main-cyan); padding: 18px 5px; border-radius: 15px; font-size: 15px; font-weight: bold; transition: 0.3s; cursor: default; }
+
+        /* Booking Form (دیزاینی وێنەی سێیەم) */
+        .booking-section { margin-top: 50px; background: var(--card); padding: 25px; border-radius: 25px; border: 1px solid #1a1a1a; }
+        .booking-section h3 { margin-top: 0; font-size: 22px; margin-bottom: 20px; }
+        input, select { width: 100%; padding: 16px; margin: 10px 0; border-radius: 12px; border: 1px solid #222; background: #111; color: white; box-sizing: border-box; font-size: 15px; text-align: right; }
+        .label-text { display: block; text-align: right; color: #888; font-size: 14px; margin: 15px 10px 5px 0; }
+
+        .btn-whatsapp { background: #2ecc71; color: #000; border: none; font-weight: bold; padding: 16px; width: 100%; border-radius: 12px; margin-top: 20px; font-size: 17px; cursor: pointer; }
+        .btn-viber { background: #8e44ad; color: white; border: none; font-weight: bold; padding: 16px; width: 100%; border-radius: 12px; margin-top: 12px; font-size: 17px; cursor: pointer; }
+
+        /* Social Icons & Footer (دیزاینی وێنەی چوارەم) */
+        .social-icons { margin-top: 40px; display: flex; justify-content: center; gap: 25px; }
+        .icon-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; border: 2px solid var(--main-cyan); color: var(--main-cyan); text-decoration: none; transition: 0.3s; }
         
-        .work-time {
-            display: inline-block;
-            border: 2px solid var(--main-cyan);
-            border-radius: 15px;
-            padding: 10px 25px;
-            margin: 15px 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
+        .created-by { margin-top: 35px; color: #fff; font-size: 15px; line-height: 1.8; }
+        .created-by span { color: var(--main-cyan); font-weight: bold; letter-spacing: 0.5px; }
 
-        .info-box { 
-            background: rgba(15, 15, 15, 0.8); 
-            padding: 20px; 
-            border-radius: 20px; 
-            border-right: 6px solid var(--main-cyan); 
-            text-align: right; 
-            margin: 20px 0; 
-        }
-        .info-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 15px; line-height: 1.6; }
-        .info-item i { margin-left: 12px; font-size: 18px; }
-        .icon-blue { color: #00acee; }
-        .icon-green { color: var(--main-cyan); }
-        .icon-star { color: #ffcc00; }
-
-        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
-        .price-card { background: #151515; padding: 20px 10px; border-radius: 15px; border: 1px solid var(--main-cyan); color: var(--main-cyan); font-weight: bold; }
-
-        .booking-form { margin-top: 35px; padding: 20px; background: #0d0d0d; border-radius: 20px; border: 1px solid #222; position: relative; }
-        input, select { width: 92%; padding: 12px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #333; background: #1a1a1a; color: white; text-align: center; }
+        /* Admin Login Button (تۆخکراوە وەک داواکرابوو) */
+        .admin-login-btn { background: #111; color: #444; border: 1px solid #222; padding: 10px 25px; border-radius: 12px; margin-top: 50px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s; }
+        .admin-login-btn:hover { color: #888; border-color: #444; }
         
-        .btn-booking { width: 98%; padding: 15px; margin-bottom: 10px; border-radius: 15px; border: none; font-weight: bold; font-size: 17px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-whatsapp { background: var(--whatsapp-green); }
-        .btn-viber { background: var(--viber-purple); }
+        /* Time Slots */
+        .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .slot { padding: 15px; border: 1px solid #222; border-radius: 12px; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .free { color: var(--main-cyan); border-color: var(--main-cyan); }
+        .booked { color: #444; border-color: #111; cursor: not-allowed; opacity: 0.4; }
+        .selected { background: var(--main-cyan) !important; color: #000 !important; font-weight: bold; }
 
-        /* ستاڵی تایبەت بۆ کاتێک ڕۆژەکە قفڵە */
-        .disabled-inputs { opacity: 0.3; pointer-events: none; }
-
-        .footer { margin-top: 30px; padding-bottom: 30px; }
-        .footer-icons { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; font-size: 24px; }
-        .footer-icons i { cursor: pointer; transition: 0.3s; }
-        .fa-viber { color: var(--viber-purple); }
-        .fa-whatsapp { color: var(--whatsapp-green); }
-        .fa-phone { color: #00acee; }
-
-        #adminPanel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 420px; background: #111; border: 2px solid var(--main-cyan); padding: 20px; border-radius: 25px; z-index: 1000; }
-        .admin-scroll { max-height: 150px; overflow-y: auto; background: #000; border-radius: 15px; margin: 10px 0; padding: 10px; border: 1px solid #222; }
-        .admin-scroll::-webkit-scrollbar { width: 5px; }
-        .admin-scroll::-webkit-scrollbar-thumb { background: var(--main-cyan); border-radius: 10px; }
-        .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #1a1a1a; }
-        .del-x { background: red; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
-
-        .off-day-banner { background: rgba(255, 51, 51, 0.2); color: var(--error-red); padding: 15px; border-radius: 15px; display: none; margin-bottom: 15px; border: 1px solid var(--error-red); font-weight: bold; }
+        /* Holiday Alert */
+        .holiday-msg { background: rgba(255, 68, 68, 0.1); color: var(--red); padding: 15px; border-radius: 12px; border: 1px solid var(--red); margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
 
-<div class="stars"></div>
-
 <div class="container">
-    <img src="logo.png" class="logo">
-    <h1 style="font-size: 32px; margin-bottom: 5px;">Farhang Cutz</h1>
-    
-    <div class="work-time">
-        <i class="fa-regular fa-clock"></i> کاتی کارکردن: 2PM - 11PM
+    <div class="logo-area">
+        <div class="barber-pole"></div>
+        <img src="logo.jpg" class="logo-img" alt="Farhang Cutz"> 
+    </div>
+    <h1>Farhang Cutz</h1>
+    <div class="work-time">🕒 کاتی کارکردن: 2PM - 11PM</div>
+
+    <div class="notes-box">
+        <div class="note-item"><span>📅</span> ڕۆژێک پێش سەردانی کردن حجز بکە.</div>
+        <div class="note-item"><span>⚠️</span> پێش کاتی خۆی لە دوکان ئامادە بن، بە پێچەوانەوە حجزەکەتان ئەفەوتێ.</div>
+        <div class="note-item" style="color: #ffd700;"><span>⭐</span> بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حجز بکەن پێش کاتی خۆی.</div>
     </div>
 
-    <div id="offDayBanner" class="off-day-banner">⚠️ ببوورە، ئەمڕۆ دوکان داخراوە!</div>
-
-    <div class="info-box">
-        <div class="info-item"><i class="fa-solid fa-calendar-check icon-blue"></i> <span>ڕۆژێک پێش سەردانی کردن حجز بکە.</span></div>
-        <div class="info-item"><i class="fa-solid fa-triangle-exclamation icon-green"></i> <span>پێش کاتی خۆت لە دوکان ئامادە بن، بە پێچەوانەوە حجزەکەتان ئەفەوتێ.</span></div>
-        <div class="info-item" style="color: #ffcc00;"><i class="fa-solid fa-star icon-star"></i> <span>بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حجز بکەن پێش کاتی خۆتان.</span></div>
+    <div class="services-section">
+        <h3>خزمەتگوزارییەکان</h3>
+        <div class="services-grid">
+            <div class="service-btn">سەرچاکردن</div>
+            <div class="service-btn">سەرچاکردن + ڕیش</div>
+            <div class="service-btn">سەر + ڕیش + داهێنان</div>
+            <div class="service-btn">برینی ئەکادیمی مەقەست</div>
+            <div class="service-btn">سەرچاکردنی VIP</div>
+            <div class="service-btn">ڕازاندنەوەی زاوا</div>
+            <div class="service-btn">هایدرۆفیشاڵ</div>
+            <div class="service-btn">کریتین و پرۆتین</div>
+            <div class="service-btn">ڕیش چاکردن</div>
+            <div class="service-btn">قژ داهێنان</div>
+            <div class="service-btn" style="grid-column: span 2;">ڕەنگکردنی قژ</div>
+        </div>
     </div>
 
-    <h2>خزمەتگوزارییەکان</h2>
-    <div class="price-grid" id="servicesGrid"></div>
-
-    <div class="booking-form" id="bookingArea">
-        <h2>داواکردنی حجز</h2>
+    <div class="booking-section">
+        <h3>داواکردنی حجز</h3>
+        <input id="userName" placeholder="ناوى سیانى">
+        <input id="userPhone" placeholder="ژمارەى مۆبایل">
         
-        <div id="lockableFields">
-            <input id="uName" placeholder="ناوی تەواو">
-            <select id="uServiceSelect"></select>
+        <select id="serviceSelect">
+            <option value="">هەڵبژاردنی جۆری کار</option>
+            <option>سەرچاکردن</option>
+            <option>سەرچاکردن + ڕیش</option>
+            <option>VIP</option>
+        </select>
+
+        <span class="label-text">بەرواری حجزکردن</span>
+        <input type="date" id="bookDate" onchange="checkStatus(this.value)">
+
+        <div id="holidayMsg" class="holiday-msg">ببوورە لەم ڕۆژەدا کار ناکەین 🚩</div>
+
+        <span class="label-text">کاتی حجزکردن</span>
+        <div id="timeSlots" class="time-grid">
+            <p style="grid-column: span 2; color:#555; font-size:13px;">تکایە سەرەتا بەروار هەڵبژێرە</p>
         </div>
 
-        <div style="text-align: right; font-size: 12px; margin-right: 15px;">بەرواری حجزکردن:</div>
-        <input type="date" id="uDate" onchange="checkStatus()">
-
-        <div id="lockableFields2">
-            <div style="text-align: right; font-size: 12px; margin-right: 15px;">کاتی حجزکردن:</div>
-            <input type="time" id="uTime">
-            <button class="btn-booking btn-whatsapp" onclick="send('wa')"><i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ</button>
-            <button class="btn-booking btn-viber" onclick="send('vi')"><i class="fa-brands fa-viber"></i> ناردن بۆ ڤایبەر</button>
-        </div>
+        <button class="btn-whatsapp" onclick="send('WA')">ناردن بۆ وەتسئەپ</button>
+        <button class="btn-viber" onclick="send('VB')">ناردن بۆ ڤایبەر</button>
     </div>
 
-    <div class="footer">
-        <div class="footer-icons">
-            <i class="fa-brands fa-viber" onclick="location.href='viber://add?number=9647700526746'"></i>
-            <i class="fa-brands fa-whatsapp" onclick="location.href='https://wa.me/9647700526746'"></i>
-            <i class="fa-solid fa-phone" onclick="location.href='tel:07700526746'"></i>
-        </div>
-        <p style="font-size: 13px; color: #888;">Website created by: <span style="color: var(--main-cyan); font-weight: bold;">Haryad Khalid</span></p>
-        <p style="font-size: 12px; color: #666;"><i class="fa-solid fa-mobile-screen-button"></i> <span style="direction: ltr; display: inline-block;">0776 692 47 32</span></p>
+    <div class="social-icons">
+        <a href="viber://chat?number=9647700526746" class="icon-circle">📞</a>
+        <a href="https://wa.me/9647700526746" class="icon-circle">💬</a>
+        <a href="tel:07700526746" class="icon-circle">📱</a>
     </div>
-</div>
 
-<div style="position: fixed; bottom: 10px; left: 10px; font-size: 10px; color: #333; cursor: pointer;" onclick="login()">Admin</div>
+    <div class="created-by">
+        Website created by: <span>Haryad Khalid</span><br>
+        📲 0776 692 47 32
+    </div>
 
-<div id="adminPanel">
-    <h3 style="color: var(--main-cyan);">بەڕێوەبردنی سیستم</h3>
-    <input id="newS" placeholder="ناوی خزمەتگوزاری نوێ">
-    <button onclick="addS()" style="background: var(--main-cyan); border: none; padding: 10px; width: 100%; border-radius: 10px; font-weight: bold;">زیادکردن</button>
-    <div class="admin-scroll" id="adminSList"></div>
-    <hr border="0" height="1" bgcolor="#222">
-    <p style="font-size: 12px; text-align: right;">قفلکردنی ڕۆژ (OFF):</p>
-    <input type="date" id="offD">
-    <button onclick="setOff()" style="background: orange; border: none; padding: 10px; width: 100%; border-radius: 10px; font-weight: bold;">دیاریکردن وەک OFF</button>
-    <div class="admin-scroll" id="adminDList"></div>
-    <button onclick="document.getElementById('adminPanel').style.display='none'" style="background: #333; color: white; width: 100%; margin-top: 10px; padding: 10px; border: none; border-radius: 10px;">داخستن</button>
+    <button class="admin-login-btn" onclick="adminLogin()">Admin Login</button>
 </div>
 
 <script>
-    let services = JSON.parse(localStorage.getItem('f_services')) || ["سەرچاکردن", "سەرچاکردن + ڕیش", "VIP"];
-    let offDays = JSON.parse(localStorage.getItem('f_offdays')) || [];
+// --- کۆنفیگی فایەربەیس (ئەوەی خۆت لێرە دابنێوە) ---
+const firebaseConfig = {
+  apiKey: "AIzaSy...", 
+  authDomain: "farhang-cutz.firebaseapp.com",
+  projectId: "farhang-cutz",
+  storageBucket: "farhang-cutz.appspot.com",
+  messagingSenderId: "...",
+  appId: "..."
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-    function render() {
-        const grid = document.getElementById('servicesGrid');
-        const select = document.getElementById('uServiceSelect');
-        const adminS = document.getElementById('adminSList');
-        const adminD = document.getElementById('adminDList');
-        grid.innerHTML = ''; select.innerHTML = ''; adminS.innerHTML = ''; adminD.innerHTML = '';
-        services.forEach((s, i) => {
-            grid.innerHTML += `<div class="price-card">${s}</div>`;
-            select.innerHTML += `<option value="${s}">${s}</option>`;
-            adminS.innerHTML += `<div class="admin-item"><span>${s}</span><div class="del-x" onclick="remS(${i})">X</div></div>`;
-        });
-        offDays.forEach((d, i) => {
-            adminD.innerHTML += `<div class="admin-item"><span>${d}</span><div class="del-x" onclick="remD(${i})">X</div></div>`;
-        });
+let selectedTime = "";
+let bookedTimes = [];
+let holidays = [];
+
+// بارکردنی پشووەکان لە سەرەتاوە
+db.collection("holidays").onSnapshot(snap => {
+    holidays = [];
+    snap.forEach(doc => holidays.push(doc.data().date));
+});
+
+function checkStatus(date) {
+    if (holidays.includes(date)) {
+        document.getElementById("holidayMsg").style.display = "block";
+        document.getElementById("timeSlots").innerHTML = "";
+        alert("ببوورە لەم ڕۆژەدا کار ناکەین");
+    } else {
+        document.getElementById("holidayMsg").style.display = "none";
+        loadBookings(date);
     }
+}
 
-    function login() { if(prompt("Pass:") === "1234") document.getElementById('adminPanel').style.display='block'; }
-    function addS() { let v = document.getElementById('newS').value; if(v) { services.push(v); save(); } }
-    function remS(i) { services.splice(i, 1); save(); }
-    function setOff() { let v = document.getElementById('offD').value; if(v) { offDays.push(v); save(); } }
-    function remD(i) { offDays.splice(i, 1); save(); }
-    function save() { localStorage.setItem('f_services', JSON.stringify(services)); localStorage.setItem('f_offdays', JSON.stringify(offDays)); render(); checkStatus(); }
+function loadBookings(date) {
+    bookedTimes = [];
+    db.collection("bookings").where("date", "==", date).get().then(snap => {
+        snap.forEach(doc => bookedTimes.push(doc.data().time));
+        renderSlots();
+    });
+}
 
-    function checkStatus() {
-        let isOff = offDays.includes(document.getElementById('uDate').value);
-        document.getElementById('offDayBanner').style.display = isOff ? 'block' : 'none';
-        
-        // تەنها بەشەکانی تر قفڵ دەکەین، بەروارەکە بە کراوەیی دەمێنێتەوە
-        const fields1 = document.getElementById('lockableFields');
-        const fields2 = document.getElementById('lockableFields2');
-        
-        if(isOff) {
-            fields1.classList.add('disabled-inputs');
-            fields2.classList.add('disabled-inputs');
-        } else {
-            fields1.classList.remove('disabled-inputs');
-            fields2.classList.remove('disabled-inputs');
+function renderSlots() {
+    const grid = document.getElementById("timeSlots");
+    grid.innerHTML = "";
+    for (let h = 14; h <= 23; h++) {
+        for (let m = 0; m < 60; m += 30) {
+            let t = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+            let isBooked = bookedTimes.includes(t);
+            let div = document.createElement("div");
+            div.className = `slot ${isBooked ? 'booked' : 'free'}`;
+            div.innerText = t;
+            if(!isBooked) div.onclick = () => {
+                document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+                div.classList.add('selected');
+                selectedTime = t;
+            };
+            grid.appendChild(div);
         }
     }
+}
 
-    function send(type) {
-        const n = document.getElementById('uName').value;
-        const s = document.getElementById('uServiceSelect').value;
-        const d = document.getElementById('uDate').value;
-        const t = document.getElementById('uTime').value;
-        if(!n || !d || !t) return alert("تکایە هەموو خانەکان پڕ بکەرەوە");
-        const msg = `حجزی نوێ:%0Aناو: ${n}%0Aکار: ${s}%0Aبەروار: ${d}%0Aکات: ${t}`;
-        if(type === 'wa') window.open(`https://wa.me/9647700526746?text=${msg}`);
-        else window.open(`viber://add?number=9647766924732&text=${msg}`);
-    }
-    render();
+function send(platform) {
+    let name = document.getElementById("userName").value;
+    let phone = document.getElementById("userPhone").value;
+    let service = document.getElementById("serviceSelect").value;
+    let date = document.getElementById("bookDate").value;
+
+    if(!name || !selectedTime || !date) return alert("تکایە زانیارییەکان تەواو بکە");
+
+    let msg = `*حجزی نوێ - Farhang Cutz*%0A👤 ناو: ${name}%0A📱 مۆبایل: ${phone}%0A✂️ کار: ${service}%0A📅 بەروار: ${date}%0A⏰ کات: ${selectedTime}`;
+    
+    db.collection("bookings").add({name, phone, service, date, time: selectedTime});
+
+    let targetPhone = "9647700526746";
+    if(platform === 'WA') window.open(`https://wa.me/${targetPhone}?text=${msg}`);
+    else window.open(`viber://forward?text=${msg}`);
+}
+
+function adminLogin() {
+    let p = prompt("Password:");
+    if(p === "1234") alert("Welcome Admin");
+}
 </script>
+
 </body>
 </html>
