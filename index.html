@@ -36,7 +36,6 @@
         .fa-whatsapp { color: var(--whatsapp-green); }
         .fa-phone { color: #00acee; }
 
-        /* Admin Styles */
         #adminPanel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 420px; background: #111; border: 2px solid var(--main-cyan); padding: 20px; border-radius: 25px; z-index: 1000; }
         .admin-scroll { max-height: 150px; overflow-y: auto; background: #000; border-radius: 15px; margin: 10px 0; padding: 10px; border: 1px solid #222; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #1a1a1a; }
@@ -94,15 +93,12 @@
     <h3 style="color: var(--main-cyan);">بەڕێوەبردنی سیستم</h3>
     <input id="newS" placeholder="ناوی خزمەتگوزاری نوێ">
     <button onclick="addS()" style="background: var(--main-cyan); border: none; padding: 10px; width: 100%; border-radius: 10px; font-weight: bold;">زیادکردن</button>
-    
     <div class="admin-scroll" id="adminSList"></div>
-
     <hr border="0" height="1" bgcolor="#222">
     <p style="font-size: 12px; text-align: right;">قفلکردنی ڕۆژ (OFF):</p>
     <input type="date" id="offD">
     <button onclick="setOff()" style="background: orange; border: none; padding: 10px; width: 100%; border-radius: 10px; font-weight: bold;">دیاریکردن وەک OFF</button>
     <div class="admin-scroll" id="adminDList"></div>
-
     <button onclick="document.getElementById('adminPanel').style.display='none'" style="background: #333; color: white; width: 100%; margin-top: 10px; padding: 10px; border: none; border-radius: 10px;">داخستن</button>
 </div>
 
@@ -115,15 +111,12 @@
         const select = document.getElementById('uServiceSelect');
         const adminS = document.getElementById('adminSList');
         const adminD = document.getElementById('adminDList');
-        
         grid.innerHTML = ''; select.innerHTML = ''; adminS.innerHTML = ''; adminD.innerHTML = '';
-
         services.forEach((s, i) => {
             grid.innerHTML += `<div class="price-card">${s}</div>`;
             select.innerHTML += `<option value="${s}">${s}</option>`;
             adminS.innerHTML += `<div class="admin-item"><span>${s}</span><div class="del-x" onclick="remS(${i})">X</div></div>`;
         });
-
         offDays.forEach((d, i) => {
             adminD.innerHTML += `<div class="admin-item"><span>${d}</span><div class="del-x" onclick="remD(${i})">X</div></div>`;
         });
@@ -149,14 +142,11 @@
         const d = document.getElementById('uDate').value;
         const t = document.getElementById('uTime').value;
         if(!n || !d || !t) return alert("تکایە هەموو خانەکان پڕ بکەرەوە");
-        
         const msg = `حجزی نوێ:%0Aناو: ${n}%0Aکار: ${s}%0Aبەروار: ${d}%0Aکات: ${t}`;
         if(type === 'wa') window.open(`https://wa.me/9647766924732?text=${msg}`);
-        else window.open(`viber://forward?text=${msg}`);
+        else window.open(`viber://add?number=9647766924732&text=${msg}`);
     }
-
     render();
 </script>
-
 </body>
 </html>
