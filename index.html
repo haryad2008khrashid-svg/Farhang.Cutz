@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farhang Cutz | وێبسایتی فەرمی</title>
-
+    <title>Farhang Cutz | Admin Dashboard</title>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
@@ -12,214 +11,164 @@
         :root { --main-cyan: #00ffd5; --red: #ff4444; --bg: #000; --card: #0a0a0a; }
         body { background: var(--bg); color: white; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; direction: rtl; }
         .container { max-width: 550px; margin: auto; padding-bottom: 50px; }
-
-        /* Header Style */
-        .logo-area { margin-top: 30px; position: relative; display: flex; justify-content: center; align-items: center; }
-        .logo-img { width: 190px; border-radius: 50%; border: 1px solid #fff; padding: 3px; background: #fff; }
-        .barber-pole { position: absolute; right: 20px; top: -10px; width: 45px; height: 140px; background: repeating-linear-gradient(-45deg, #fff, #fff 15px, #f00 15px, #f00 30px, #fff 30px, #fff 45px, #00f 45px, #00f 60px); border-radius: 30px; border: 4px solid #333; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
         
-        h1 { font-size: 35px; margin: 20px 0 10px; letter-spacing: 1px; }
-        .work-time { display: inline-block; border: 1px solid var(--main-cyan); color: var(--main-cyan); padding: 12px 30px; border-radius: 15px; font-weight: bold; margin-bottom: 25px; font-size: 16px; background: rgba(0, 255, 213, 0.05); }
-
-        /* Notes Section (دیزاینی وێنەی یەکەم) */
-        .notes-box { background: var(--card); padding: 20px; border-radius: 15px; text-align: right; border-right: 5px solid var(--main-cyan); margin: 15px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
-        .note-item { display: flex; align-items: flex-start; margin-bottom: 15px; font-size: 15px; color: #eee; line-height: 1.6; }
-        .note-item span { margin-left: 12px; font-size: 20px; }
-
-        /* Services Grid (دیزاینی وێنەی دووەم) */
-        .services-section { margin-top: 40px; }
-        .services-section h3 { font-size: 24px; margin-bottom: 20px; color: #fff; }
-        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .service-btn { border: 1.5px solid var(--main-cyan); background: transparent; color: var(--main-cyan); padding: 18px 5px; border-radius: 15px; font-size: 15px; font-weight: bold; transition: 0.3s; cursor: default; }
-
-        /* Booking Form (دیزاینی وێنەی سێیەم) */
-        .booking-section { margin-top: 50px; background: var(--card); padding: 25px; border-radius: 25px; border: 1px solid #1a1a1a; }
-        .booking-section h3 { margin-top: 0; font-size: 22px; margin-bottom: 20px; }
-        input, select { width: 100%; padding: 16px; margin: 10px 0; border-radius: 12px; border: 1px solid #222; background: #111; color: white; box-sizing: border-box; font-size: 15px; text-align: right; }
-        .label-text { display: block; text-align: right; color: #888; font-size: 14px; margin: 15px 10px 5px 0; }
-
-        .btn-whatsapp { background: #2ecc71; color: #000; border: none; font-weight: bold; padding: 16px; width: 100%; border-radius: 12px; margin-top: 20px; font-size: 17px; cursor: pointer; }
-        .btn-viber { background: #8e44ad; color: white; border: none; font-weight: bold; padding: 16px; width: 100%; border-radius: 12px; margin-top: 12px; font-size: 17px; cursor: pointer; }
-
-        /* Social Icons & Footer (دیزاینی وێنەی چوارەم) */
-        .social-icons { margin-top: 40px; display: flex; justify-content: center; gap: 25px; }
-        .icon-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; border: 2px solid var(--main-cyan); color: var(--main-cyan); text-decoration: none; transition: 0.3s; }
+        /* Styles for Admin Panel */
+        .admin-box { background: var(--card); border: 2px solid var(--main-cyan); border-radius: 20px; padding: 20px; margin-top: 30px; display: none; text-align: right; }
+        .admin-section { margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; }
+        .btn-add { background: var(--main-cyan); color: #000; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-delete { background: var(--red); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-right: 10px; }
         
-        .created-by { margin-top: 35px; color: #fff; font-size: 15px; line-height: 1.8; }
-        .created-by span { color: var(--main-cyan); font-weight: bold; letter-spacing: 0.5px; }
-
-        /* Admin Login Button (تۆخکراوە وەک داواکرابوو) */
-        .admin-login-btn { background: #111; color: #444; border: 1px solid #222; padding: 10px 25px; border-radius: 12px; margin-top: 50px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s; }
-        .admin-login-btn:hover { color: #888; border-color: #444; }
+        /* Service Buttons Grid */
+        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .service-item { border: 1.5px solid var(--main-cyan); color: var(--main-cyan); padding: 15px; border-radius: 15px; font-weight: bold; position: relative; }
         
-        /* Time Slots */
-        .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .slot { padding: 15px; border: 1px solid #222; border-radius: 12px; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .free { color: var(--main-cyan); border-color: var(--main-cyan); }
-        .booked { color: #444; border-color: #111; cursor: not-allowed; opacity: 0.4; }
-        .selected { background: var(--main-cyan) !important; color: #000 !important; font-weight: bold; }
-
-        /* Holiday Alert */
-        .holiday-msg { background: rgba(255, 68, 68, 0.1); color: var(--red); padding: 15px; border-radius: 12px; border: 1px solid var(--red); margin-top: 15px; display: none; }
+        .booking-item { background: #111; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-right: 4px solid var(--main-cyan); }
+        .holiday-item { display: flex; justify-content: space-between; background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="logo-area">
-        <div class="barber-pole"></div>
-        <img src="logo.jpg" class="logo-img" alt="Farhang Cutz"> 
-    </div>
+    <img src="logo.png" style="width:150px; border-radius:50%; margin-top:20px;">
     <h1>Farhang Cutz</h1>
-    <div class="work-time">🕒 کاتی کارکردن: 2PM - 11PM</div>
 
-    <div class="notes-box">
-        <div class="note-item"><span>📅</span> ڕۆژێک پێش سەردانی کردن حجز بکە.</div>
-        <div class="note-item"><span>⚠️</span> پێش کاتی خۆی لە دوکان ئامادە بن، بە پێچەوانەوە حجزەکەتان ئەفەوتێ.</div>
-        <div class="note-item" style="color: #ffd700;"><span>⭐</span> بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حجز بکەن پێش کاتی خۆی.</div>
-    </div>
+    <div id="userServicesGrid" class="services-grid"></div>
 
-    <div class="services-section">
-        <h3>خزمەتگوزارییەکان</h3>
-        <div class="services-grid">
-            <div class="service-btn">سەرچاکردن</div>
-            <div class="service-btn">سەرچاکردن + ڕیش</div>
-            <div class="service-btn">سەر + ڕیش + داهێنان</div>
-            <div class="service-btn">برینی ئەکادیمی مەقەست</div>
-            <div class="service-btn">سەرچاکردنی VIP</div>
-            <div class="service-btn">ڕازاندنەوەی زاوا</div>
-            <div class="service-btn">هایدرۆفیشاڵ</div>
-            <div class="service-btn">کریتین و پرۆتین</div>
-            <div class="service-btn">ڕیش چاکردن</div>
-            <div class="service-btn">قژ داهێنان</div>
-            <div class="service-btn" style="grid-column: span 2;">ڕەنگکردنی قژ</div>
-        </div>
-    </div>
+    <hr style="margin:40px 0; border:0; border-top:1px solid #222;">
 
-    <div class="booking-section">
-        <h3>داواکردنی حجز</h3>
-        <input id="userName" placeholder="ناوى سیانى">
-        <input id="userPhone" placeholder="ژمارەى مۆبایل">
-        
-        <select id="serviceSelect">
-            <option value="">هەڵبژاردنی جۆری کار</option>
-            <option>سەرچاکردن</option>
-            <option>سەرچاکردن + ڕیش</option>
-            <option>VIP</option>
-        </select>
+    <button onclick="adminLogin()" style="background:transparent; color:#333; border:none; cursor:pointer;">Admin Login</button>
 
-        <span class="label-text">بەرواری حجزکردن</span>
-        <input type="date" id="bookDate" onchange="checkStatus(this.value)">
+    <div id="adminPanel" class="admin-box">
+        <h2 style="color:var(--main-cyan); text-align:center;">بەڕێوەبردن</h2>
 
-        <div id="holidayMsg" class="holiday-msg">ببوورە لەم ڕۆژەدا کار ناکەین 🚩</div>
-
-        <span class="label-text">کاتی حجزکردن</span>
-        <div id="timeSlots" class="time-grid">
-            <p style="grid-column: span 2; color:#555; font-size:13px;">تکایە سەرەتا بەروار هەڵبژێرە</p>
+        <div class="admin-section">
+            <h3>✂️ خزمەتگوزارییەکان</h3>
+            <input type="text" id="newServiceName" placeholder="ناوی خزمەتگوزاری (بۆ نموونە: چاکردنی ڕیش)">
+            <button class="btn-add" onclick="addService()">زیادکردن</button>
+            <div id="adminServicesList" style="margin-top:15px;"></div>
         </div>
 
-        <button class="btn-whatsapp" onclick="send('WA')">ناردن بۆ وەتسئەپ</button>
-        <button class="btn-viber" onclick="send('VB')">ناردن بۆ ڤایبەر</button>
-    </div>
+        <div class="admin-section">
+            <h3>📅 دیاریکردنی پشوو</h3>
+            <input type="date" id="holidayDate">
+            <button class="btn-add" onclick="addHoliday()">تۆمارکردنی پشوو</button>
+            <div id="adminHolidaysList" style="margin-top:15px;"></div>
+        </div>
 
-    <div class="social-icons">
-        <a href="viber://chat?number=9647700526746" class="icon-circle">📞</a>
-        <a href="https://wa.me/9647700526746" class="icon-circle">💬</a>
-        <a href="tel:07700526746" class="icon-circle">📱</a>
-    </div>
+        <div class="admin-section">
+            <h3>📑 حجزەکان</h3>
+            <div id="adminBookingsList"></div>
+        </div>
 
-    <div class="created-by">
-        Website created by: <span>Haryad Khalid</span><br>
-        📲 0776 692 47 32
+        <button onclick="location.reload()" style="width:100%; padding:10px; background:#333; color:white; border:none; border-radius:10px;">داخستنی پانێڵ</button>
     </div>
-
-    <button class="admin-login-btn" onclick="adminLogin()">Admin Login</button>
 </div>
 
 <script>
-// --- کۆنفیگی فایەربەیس (ئەوەی خۆت لێرە دابنێوە) ---
+// Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSy...", 
+  apiKey: "AIzaSyC-Wq9GZw1iXJO44ItfTNCHAaRTc8xVD1I",
   authDomain: "farhang-cutz.firebaseapp.com",
   projectId: "farhang-cutz",
-  storageBucket: "farhang-cutz.appspot.com",
-  messagingSenderId: "...",
-  appId: "..."
+  storageBucket: "farhang-cutz.firebasestorage.app",
+  messagingSenderId: "281170796987",
+  appId: "1:281170796987:web:4eaa46cbd150f1f567249e"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-let selectedTime = "";
-let bookedTimes = [];
-let holidays = [];
-
-// بارکردنی پشووەکان لە سەرەتاوە
-db.collection("holidays").onSnapshot(snap => {
-    holidays = [];
-    snap.forEach(doc => holidays.push(doc.data().date));
-});
-
-function checkStatus(date) {
-    if (holidays.includes(date)) {
-        document.getElementById("holidayMsg").style.display = "block";
-        document.getElementById("timeSlots").innerHTML = "";
-        alert("ببوورە لەم ڕۆژەدا کار ناکەین");
-    } else {
-        document.getElementById("holidayMsg").style.display = "none";
-        loadBookings(date);
-    }
-}
-
-function loadBookings(date) {
-    bookedTimes = [];
-    db.collection("bookings").where("date", "==", date).get().then(snap => {
-        snap.forEach(doc => bookedTimes.push(doc.data().time));
-        renderSlots();
+// ١. بارکردنی خزمەتگوزارییەکان
+function loadServices() {
+    db.collection("services").onSnapshot(snap => {
+        const userGrid = document.getElementById("userServicesGrid");
+        const adminList = document.getElementById("adminServicesList");
+        userGrid.innerHTML = "";
+        adminList.innerHTML = "";
+        
+        snap.forEach(doc => {
+            const s = doc.data();
+            // بۆ بەکارهێنەر
+            userGrid.innerHTML += `<div class="service-item">${s.name}</div>`;
+            // بۆ ئەدمین (بۆ سڕینەوە)
+            adminList.innerHTML += `
+                <div class="holiday-item">
+                    <span>${s.name}</span>
+                    <button class="btn-delete" onclick="deleteDoc('services', '${doc.id}')">سڕینەوە</button>
+                </div>`;
+        });
     });
 }
 
-function renderSlots() {
-    const grid = document.getElementById("timeSlots");
-    grid.innerHTML = "";
-    for (let h = 14; h <= 23; h++) {
-        for (let m = 0; m < 60; m += 30) {
-            let t = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
-            let isBooked = bookedTimes.includes(t);
-            let div = document.createElement("div");
-            div.className = `slot ${isBooked ? 'booked' : 'free'}`;
-            div.innerText = t;
-            if(!isBooked) div.onclick = () => {
-                document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
-                div.classList.add('selected');
-                selectedTime = t;
-            };
-            grid.appendChild(div);
-        }
+// ٢. زیادکردنی خزمەتگوزاری نوێ
+function addService() {
+    const name = document.getElementById("newServiceName").value;
+    if(!name) return;
+    db.collection("services").add({ name: name }).then(() => {
+        document.getElementById("newServiceName").value = "";
+    });
+}
+
+// ٣. زیادکردنی پشوو
+function addHoliday() {
+    const date = document.getElementById("holidayDate").value;
+    if(!date) return;
+    db.collection("holidays").add({ date: date });
+}
+
+// ٤. بارکردنی پشووەکان بۆ ئەدمین
+function loadHolidays() {
+    db.collection("holidays").onSnapshot(snap => {
+        const list = document.getElementById("adminHolidaysList");
+        list.innerHTML = "";
+        snap.forEach(doc => {
+            list.innerHTML += `
+                <div class="holiday-item">
+                    <span>${doc.data().date}</span>
+                    <button class="btn-delete" onclick="deleteDoc('holidays', '${doc.id}')">سڕینەوە</button>
+                </div>`;
+        });
+    });
+}
+
+// ٥. سڕینەوەی هەر دۆکیومێنتێک
+function deleteDoc(col, id) {
+    if(confirm("دڵنیای لە سڕینەوە؟")) {
+        db.collection(col).doc(id).delete();
     }
 }
 
-function send(platform) {
-    let name = document.getElementById("userName").value;
-    let phone = document.getElementById("userPhone").value;
-    let service = document.getElementById("serviceSelect").value;
-    let date = document.getElementById("bookDate").value;
-
-    if(!name || !selectedTime || !date) return alert("تکایە زانیارییەکان تەواو بکە");
-
-    let msg = `*حجزی نوێ - Farhang Cutz*%0A👤 ناو: ${name}%0A📱 مۆبایل: ${phone}%0A✂️ کار: ${service}%0A📅 بەروار: ${date}%0A⏰ کات: ${selectedTime}`;
-    
-    db.collection("bookings").add({name, phone, service, date, time: selectedTime});
-
-    let targetPhone = "9647700526746";
-    if(platform === 'WA') window.open(`https://wa.me/${targetPhone}?text=${msg}`);
-    else window.open(`viber://forward?text=${msg}`);
+// ٦. بارکردنی حجزەکان
+function loadBookings() {
+    db.collection("bookings").orderBy("date", "desc").onSnapshot(snap => {
+        const list = document.getElementById("adminBookingsList");
+        list.innerHTML = "";
+        snap.forEach(doc => {
+            const b = doc.data();
+            list.innerHTML += `
+                <div class="booking-item">
+                    <b>${b.name}</b><br>
+                    📅 ${b.date} | ⏰ ${b.time}<br>
+                    ✂️ ${b.service} | 📱 ${b.phone}
+                    <button class="btn-delete" onclick="deleteDoc('bookings', '${doc.id}')" style="margin-top:10px; width:100%;">سڕینەوەی حجز</button>
+                </div>`;
+        });
+    });
 }
 
 function adminLogin() {
     let p = prompt("Password:");
-    if(p === "1234") alert("Welcome Admin");
+    if(p === "102030") {
+        document.getElementById("adminPanel").style.display = "block";
+        loadServices();
+        loadHolidays();
+        loadBookings();
+        window.scrollTo(0, document.body.scrollHeight);
+    }
 }
-</script>
 
+// دەستپێکردن
+loadServices();
+</script>
 </body>
 </html>
