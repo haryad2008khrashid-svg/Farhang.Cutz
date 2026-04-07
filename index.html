@@ -15,19 +15,42 @@
         .container { max-width: 600px; margin: auto; padding: 20px; background: rgba(0, 0, 0, 0.9); border-radius: 25px; margin-top: 40px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 213, 0.2); }
         .logo { width: 150px; margin-bottom: 10px; }
         
-        .info-box { background: rgba(15, 15, 15, 0.8); padding: 20px; border-radius: 20px; border-right: 4px solid var(--main-cyan); text-align: right; margin: 20px 0; }
-        .info-item { display: flex; align-items: center; margin-bottom: 10px; font-size: 14px; }
-        .info-item i { margin-left: 10px; color: var(--main-cyan); }
+        .work-time {
+            display: inline-block;
+            border: 2px solid var(--main-cyan);
+            border-radius: 15px;
+            padding: 10px 25px;
+            margin: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info-box { 
+            background: rgba(15, 15, 15, 0.8); 
+            padding: 20px; 
+            border-radius: 20px; 
+            border-right: 6px solid var(--main-cyan); 
+            text-align: right; 
+            margin: 20px 0; 
+        }
+        .info-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 15px; line-height: 1.6; }
+        .info-item i { margin-left: 12px; font-size: 18px; }
+        .icon-blue { color: #00acee; }
+        .icon-green { color: var(--main-cyan); }
+        .icon-star { color: #ffcc00; }
 
         .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
         .price-card { background: #151515; padding: 20px 10px; border-radius: 15px; border: 1px solid var(--main-cyan); color: var(--main-cyan); font-weight: bold; }
 
-        .booking-form { margin-top: 35px; padding: 20px; background: #0d0d0d; border-radius: 20px; border: 1px solid #222; }
+        .booking-form { margin-top: 35px; padding: 20px; background: #0d0d0d; border-radius: 20px; border: 1px solid #222; position: relative; }
         input, select { width: 92%; padding: 12px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #333; background: #1a1a1a; color: white; text-align: center; }
         
         .btn-booking { width: 98%; padding: 15px; margin-bottom: 10px; border-radius: 15px; border: none; font-weight: bold; font-size: 17px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .btn-whatsapp { background: var(--whatsapp-green); }
         .btn-viber { background: var(--viber-purple); }
+
+        /* ستاڵی تایبەت بۆ کاتێک ڕۆژەکە قفڵە */
+        .disabled-inputs { opacity: 0.3; pointer-events: none; }
 
         .footer { margin-top: 30px; padding-bottom: 30px; }
         .footer-icons { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; font-size: 24px; }
@@ -38,6 +61,8 @@
 
         #adminPanel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 420px; background: #111; border: 2px solid var(--main-cyan); padding: 20px; border-radius: 25px; z-index: 1000; }
         .admin-scroll { max-height: 150px; overflow-y: auto; background: #000; border-radius: 15px; margin: 10px 0; padding: 10px; border: 1px solid #222; }
+        .admin-scroll::-webkit-scrollbar { width: 5px; }
+        .admin-scroll::-webkit-scrollbar-thumb { background: var(--main-cyan); border-radius: 10px; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #1a1a1a; }
         .del-x { background: red; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
 
@@ -50,14 +75,18 @@
 
 <div class="container">
     <img src="logo.png" class="logo">
-    <h1 style="font-size: 32px;">Farhang Cutz</h1>
+    <h1 style="font-size: 32px; margin-bottom: 5px;">Farhang Cutz</h1>
     
+    <div class="work-time">
+        <i class="fa-regular fa-clock"></i> کاتی کارکردن: 2PM - 11PM
+    </div>
+
     <div id="offDayBanner" class="off-day-banner">⚠️ ببوورە، ئەمڕۆ دوکان داخراوە!</div>
 
     <div class="info-box">
-        <div class="info-item"><i class="fa-solid fa-calendar-check"></i> ڕۆژێک پێش سەردانی کردن حجز بکە.</div>
-        <div class="info-item"><i class="fa-solid fa-triangle-exclamation"></i> پێش کاتی خۆت لە دوکان ئامادە بن، بە پێچەوانەوە حجزەکەتان ئەفەوتێ.</div>
-        <div class="info-item" style="color: #ffcc00;"><i class="fa-solid fa-star"></i> بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حجز بکەن پێش کاتی خۆتان.</div>
+        <div class="info-item"><i class="fa-solid fa-calendar-check icon-blue"></i> <span>ڕۆژێک پێش سەردانی کردن حجز بکە.</span></div>
+        <div class="info-item"><i class="fa-solid fa-triangle-exclamation icon-green"></i> <span>پێش کاتی خۆت لە دوکان ئامادە بن، بە پێچەوانەوە حجزەکەتان ئەفەوتێ.</span></div>
+        <div class="info-item" style="color: #ffcc00;"><i class="fa-solid fa-star icon-star"></i> <span>بۆ کاتکردنی VIP لە 10ی بەیانی بۆ 12ی نیوەڕۆ حجز بکەن پێش کاتی خۆتان.</span></div>
     </div>
 
     <h2>خزمەتگوزارییەکان</h2>
@@ -65,15 +94,21 @@
 
     <div class="booking-form" id="bookingArea">
         <h2>داواکردنی حجز</h2>
-        <input id="uName" placeholder="ناوی تەواو">
-        <select id="uServiceSelect"></select>
+        
+        <div id="lockableFields">
+            <input id="uName" placeholder="ناوی تەواو">
+            <select id="uServiceSelect"></select>
+        </div>
+
         <div style="text-align: right; font-size: 12px; margin-right: 15px;">بەرواری حجزکردن:</div>
         <input type="date" id="uDate" onchange="checkStatus()">
-        <div style="text-align: right; font-size: 12px; margin-right: 15px;">کاتی حجزکردن:</div>
-        <input type="time" id="uTime">
-        
-        <button class="btn-booking btn-whatsapp" onclick="send('wa')"><i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ</button>
-        <button class="btn-booking btn-viber" onclick="send('vi')"><i class="fa-brands fa-viber"></i> ناردن بۆ ڤایبەر</button>
+
+        <div id="lockableFields2">
+            <div style="text-align: right; font-size: 12px; margin-right: 15px;">کاتی حجزکردن:</div>
+            <input type="time" id="uTime">
+            <button class="btn-booking btn-whatsapp" onclick="send('wa')"><i class="fa-brands fa-whatsapp"></i> ناردن بۆ واتسەپ</button>
+            <button class="btn-booking btn-viber" onclick="send('vi')"><i class="fa-brands fa-viber"></i> ناردن بۆ ڤایبەر</button>
+        </div>
     </div>
 
     <div class="footer">
@@ -132,8 +167,18 @@
     function checkStatus() {
         let isOff = offDays.includes(document.getElementById('uDate').value);
         document.getElementById('offDayBanner').style.display = isOff ? 'block' : 'none';
-        document.getElementById('bookingArea').style.opacity = isOff ? '0.2' : '1';
-        document.getElementById('bookingArea').style.pointerEvents = isOff ? 'none' : 'all';
+        
+        // تەنها بەشەکانی تر قفڵ دەکەین، بەروارەکە بە کراوەیی دەمێنێتەوە
+        const fields1 = document.getElementById('lockableFields');
+        const fields2 = document.getElementById('lockableFields2');
+        
+        if(isOff) {
+            fields1.classList.add('disabled-inputs');
+            fields2.classList.add('disabled-inputs');
+        } else {
+            fields1.classList.remove('disabled-inputs');
+            fields2.classList.remove('disabled-inputs');
+        }
     }
 
     function send(type) {
