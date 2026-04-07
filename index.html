@@ -32,16 +32,33 @@
         .whatsapp { background: #25D366; color: white; }
         .viber { background: #7360f2; color: white; }
 
-        .social-links { display: flex; justify-content: center; gap: 20px; margin-top: 35px; background: var(--glass); padding: 15px; border-radius: 50px; width: fit-content; margin-left: auto; margin-right: auto; }
-        .social-circle { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--main-cyan); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 24px; }
+        .social-links { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 35px; background: var(--glass); padding: 15px; border-radius: 50px; width: fit-content; margin-left: auto; margin-right: auto; flex-wrap: wrap; }
+        .social-circle { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--main-cyan); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 22px; }
         
+        /* ستایلی نوێ بۆ دوگمەی لۆکەیشن */
+        .location-btn {
+            background: #fff;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 2px solid var(--main-cyan);
+            transition: 0.3s;
+        }
+        .location-btn img { width: 20px; height: 20px; }
+        .location-btn:hover { transform: scale(1.05); background: var(--main-cyan); color: #000; }
+
         .footer { margin-top: 30px; font-size: 15px; background: var(--glass); padding: 10px; border-radius: 10px; display: inline-block; direction: ltr; }
         .footer span { color: var(--main-cyan); font-weight: bold; }
 
         #adminPanel { display: none; background: #111; color: white; padding: 20px; border: 2px dashed var(--main-cyan); border-radius: 20px; margin-top: 20px; text-align: right; }
         .admin-item { display: flex; justify-content: space-between; background: #222; padding: 10px; margin-bottom: 5px; border-radius: 8px; }
         
-        /* شاردنەوەی ئایکۆنی ناوەکی بۆ کات و بەروار بۆ ئەوەی جوانتر دیار بێت */
         input[type="date"]::-webkit-calendar-picker-indicator,
         input[type="time"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
@@ -85,6 +102,10 @@
         </div>
 
         <div class="social-links">
+            <a href="https://www.google.com/maps?q=35.620862,45.409998" target="_blank" class="location-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Google_Maps_icon_%282015-2020%29.svg" alt="Map">
+                لۆکەیشنی ئێمە
+            </a>
             <a href="viber://chat?number=9647700526746" class="social-circle"><i class="fab fa-viber" style="color: #7360f2;"></i></a>
             <a href="https://wa.me/9647700526746" class="social-circle"><i class="fab fa-whatsapp" style="color: #25D366;"></i></a>
             <a href="tel:07700526746" class="social-circle"><i class="fas fa-phone" style="color: #3498db;"></i></a>
@@ -111,7 +132,6 @@
     </div>
 
     <script>
-        // Star Animation
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -121,7 +141,6 @@
         for(let i=0; i<150; i++) stars.push(new Star());
         function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); stars.forEach(s=>{s.draw(); s.update();}); requestAnimationFrame(anim); } anim();
 
-        // Firebase Initialization
         const firebaseConfig = { apiKey: "AIzaSyC-Wq9GZw1iXJO44ItfTNCHAaRTc8xVD1I", projectId: "farhang-cutz" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
