@@ -35,21 +35,7 @@
         .social-links { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 35px; background: var(--glass); padding: 15px; border-radius: 50px; width: fit-content; margin-left: auto; margin-right: auto; flex-wrap: wrap; }
         .social-circle { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--main-cyan); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 22px; }
         
-        /* ستایلی نوێ بۆ دوگمەی لۆکەیشن */
-        .location-btn {
-            background: #fff;
-            color: #333;
-            padding: 8px 15px;
-            border-radius: 25px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            border: 2px solid var(--main-cyan);
-            transition: 0.3s;
-        }
+        .location-btn { background: #fff; color: #333; padding: 8px 15px; border-radius: 25px; text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; border: 2px solid var(--main-cyan); transition: 0.3s; }
         .location-btn img { width: 20px; height: 20px; }
         .location-btn:hover { transform: scale(1.05); background: var(--main-cyan); color: #000; }
 
@@ -60,9 +46,7 @@
         .admin-item { display: flex; justify-content: space-between; background: #222; padding: 10px; margin-bottom: 5px; border-radius: 8px; }
         
         input[type="date"]::-webkit-calendar-picker-indicator,
-        input[type="time"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-        }
+        input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); }
     </style>
 </head>
 <body>
@@ -120,6 +104,10 @@
         
         <div id="adminPanel">
             <h3 style="color:white;">بەڕێوەبردن</h3>
+            <div style="background:#222; padding:10px; border-radius:10px; margin-bottom:10px;">
+                <input id="newPassInput" placeholder="پاسۆردی نوێ">
+                <button onclick="changePass()" style="width:100%; padding:8px; background:#f1c40f; border:none; font-weight:bold; border-radius:5px;">گۆڕینی پاسۆرد</button>
+            </div>
             <input id="newS" placeholder="ناوی خزمەتگوزاری">
             <button onclick="addS()" style="width:100%; padding:12px; background:var(--main-cyan); border:none; font-weight:bold; border-radius:8px;">زیادکردن</button>
             <div id="adminSList" style="margin:15px 0;"></div>
@@ -147,6 +135,9 @@
 
         let holidays = [];
         let allBookings = [];
+        let adminPass = "1234";
+
+        db.collection("settings").doc("admin").onSnapshot(doc => { if(doc.exists) adminPass = doc.data().pass; });
 
         db.collection("services").onSnapshot(snap => {
             const grid = document.getElementById("userServicesGrid");
@@ -178,14 +169,19 @@
 
         function checkHoliday() {
             const d = document.getElementById("bookDate").value;
-            document.getElementById("holidayNotice").style.display = holidays.includes(d) ? "block" : "none";
+            const day = new Date(d).getDay();
+            const notice = document.getElementById("holidayNotice");
+            if(day === 5) { notice.innerText = "ببورە ڕۆژی هەینی پشومانە و کار ناکەین"; notice.style.display = "block"; }
+            else if(holidays.includes(d)) { notice.innerText = "ببورە لەم بەروارەدا پشووە 🚩"; notice.style.display = "block"; }
+            else { notice.style.display = "none"; }
         }
 
         function addS() { const n = document.getElementById("newS").value; if(n) db.collection("services").add({name:n}); document.getElementById("newS").value=""; }
         function delS(id) { db.collection("services").doc(id).delete(); }
         function addH() { const d = document.getElementById("hDate").value; if(d) db.collection("holidays").add({date:d}); }
         function delH(id) { db.collection("holidays").doc(id).delete(); }
-        function loginAdmin() { if(prompt("Password:") === "1234") document.getElementById("adminPanel").style.display="block"; }
+        function loginAdmin() { if(prompt("Password:") === adminPass) document.getElementById("adminPanel").style.display="block"; else alert("پاسۆرد هەڵەیە"); }
+        function changePass() { const p = document.getElementById("newPassInput").value; if(p) { db.collection("settings").doc("admin").set({pass:p}); alert("پاسۆرد گۆڕدرا"); } }
 
         function send(p) {
             const name = document.getElementById("userName").value;
@@ -194,7 +190,14 @@
             const time = document.getElementById("bookTime").value;
 
             if(!name || !date || !time || !service) return alert("تکایە هەموو خانەکان پڕ بکەرەوە");
+            
+            const day = new Date(date).getDay();
+            if(day === 5) return alert("ببورە ڕۆژی هەینی پشومانە و کار ناکەین");
             if(holidays.includes(date)) return alert("ببورە ئەم ڕۆژە پشووە");
+
+            const hour = parseInt(time.split(":")[0]);
+            // ڕێگری لە 11PM (23:00) بۆ 10AM (10:00)
+            if(hour >= 23 || hour < 10) return alert("ببورە لەم کاتەدا حجز ناکرێت (11PM - 10AM داخراوە)");
 
             const newTime = new Date(`${date}T${time}`);
             let isBusy = false;
@@ -206,7 +209,7 @@
                 }
             });
 
-            if(isBusy) return alert("ببورە ئەم کاتە حجز کراوە یان زۆر نزیکە لە حجزی دواتر تکایە کاتێکی تر هەڵبژێرە");
+            if(isBusy) return alert("ببورە ئەم کاتە حجز کراوە یان زۆر نزیکە لە حجزی دواتر");
 
             db.collection("bookings").add({name, service, date, time});
             const msg = `*حجزی نوێ*%0Aناو: ${name}%0Aکار: ${service}%0Aبەروار: ${date}%0Aکات: ${time}`;
