@@ -79,7 +79,9 @@
             <div id="holidayNotice" style="color:#ff4d4d; display:none; margin:10px 0; font-weight: bold;">ببورە لەم بەروارەدا پشووە 🚩</div>
             
             <label style="display:block; text-align:right; font-size:12px; margin-bottom:2px; color:var(--main-cyan);">کات حجز بکە</label>
-            <input type="time" id="bookTime">
+            <input type="time" id="bookTime" onchange="checkTime()">
+            
+            <div id="timeNotice" style="color:#ff4d4d; display:none; margin:10px 0; font-weight: bold;">ببورە لەم کاتەدا حجز ناکرێت (11PM - 10AM داخراوە)</div>
             
             <button class="btn-send whatsapp" onclick="send('WA')"><i class="fab fa-whatsapp"></i> ناردن بۆ واتسئەپ</button>
             <button class="btn-send viber" onclick="send('VB')"><i class="fab fa-viber"></i> ناردن بۆ ڤایبەر</button>
@@ -176,6 +178,18 @@
             else { notice.style.display = "none"; }
         }
 
+        function checkTime() {
+            const time = document.getElementById("bookTime").value;
+            const notice = document.getElementById("timeNotice");
+            if(time) {
+                const hour = parseInt(time.split(":")[0]);
+                if(hour >= 23 || hour < 10) { notice.style.display = "block"; }
+                else { notice.style.display = "none"; }
+            } else {
+                notice.style.display = "none";
+            }
+        }
+
         function addS() { const n = document.getElementById("newS").value; if(n) db.collection("services").add({name:n}); document.getElementById("newS").value=""; }
         function delS(id) { db.collection("services").doc(id).delete(); }
         function addH() { const d = document.getElementById("hDate").value; if(d) db.collection("holidays").add({date:d}); }
@@ -196,7 +210,6 @@
             if(holidays.includes(date)) return alert("ببورە ئەم ڕۆژە پشووە");
 
             const hour = parseInt(time.split(":")[0]);
-            // ڕێگری لە 11PM (23:00) بۆ 10AM (10:00)
             if(hour >= 23 || hour < 10) return alert("ببورە لەم کاتەدا حجز ناکرێت (11PM - 10AM داخراوە)");
 
             const newTime = new Date(`${date}T${time}`);
